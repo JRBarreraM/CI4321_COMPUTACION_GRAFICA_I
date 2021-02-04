@@ -11,68 +11,9 @@ using namespace std;
 
 namespace CS248 {
 
-
-// Implements SoftwareRenderer //
-bool CompareFloat (float A, float B) {
-  float diff = A - B;
-  return (fabs(diff) < 0.00001);
-}
 // fill a sample location with color
 void SoftwareRendererImp::fill_sample(int sx, int sy, const Color &color) {
-  //return;
 
-  fill_pixel(sx, sy, color);
-  float inv255 = 1.0 / 255.0;
-
-  Color x1;
-  x1.r = render_target[4 * (sx +1+ sy * target_w)] * inv255;
-  x1.g = render_target[4 * (sx +1+ sy * target_w) + 1] * inv255;
-  x1.b = render_target[4 * (sx +1+ sy * target_w) + 2] * inv255;
-  x1.a = render_target[4 * (sx +1+ sy * target_w) + 3] * inv255;
-
-
-  Color x2;
-  x2.r = render_target[4 * (sx -1+ sy * target_w)] * inv255;
-  x2.g = render_target[4 * (sx -1+ sy * target_w) + 1] * inv255;
-  x2.b = render_target[4 * (sx -1+ sy * target_w) + 2] * inv255;
-  x2.a = render_target[4 * (sx -1+ sy * target_w) + 3] * inv255;
-
-
-  Color x3;
-  x3.r = render_target[4 * (sx + (sy+1) * target_w)] * inv255;
-  x3.g = render_target[4 * (sx + (sy+1) * target_w) + 1] * inv255;
-  x3.b = render_target[4 * (sx + (sy+1) * target_w) + 2] * inv255;
-  x3.a = render_target[4 * (sx + (sy+1) * target_w) + 3] * inv255;
-
-
-  Color x4;
-  x4.r = render_target[4 * (sx + (sy-1) * target_w)] * inv255;
-  x4.g = render_target[4 * (sx + (sy-1) * target_w) + 1] * inv255;
-  x4.b = render_target[4 * (sx + (sy-1) * target_w) + 2] * inv255;
-  x4.a = render_target[4 * (sx + (sy-1) * target_w) + 3] * inv255;
-/*
-  printf("%f %f %f %f\n", x1.r, x1.g, x1.b, x1.a);
-  printf("%f %f %f %f\n", color.r, color.g, color.b, color.a);
-  printf("pupu\n");
-*/
-  
-  if (!((CompareFloat(x1.r, color.r)) && (CompareFloat(x1.g, color.g)) 
-  && (CompareFloat(x1.b, color.b)) && (CompareFloat(x1.a, color.a)))) {
-    fill_sample(sx+1, sy, color);
-  }
-  if (!((CompareFloat(x2.r, color.r)) && (CompareFloat(x2.g, color.g)) 
-  && (CompareFloat(x2.b, color.b)) && (CompareFloat(x2.a, color.a)))) {
-    fill_sample(sx-1, sy, color);
-  }
-  if (!((CompareFloat(x3.r, color.r)) && (CompareFloat(x3.g, color.g)) 
-  && (CompareFloat(x3.b, color.b)) && (CompareFloat(x3.a, color.a)))) {
-    fill_sample(sx, sy+1, color);
-  }
-  if (!((CompareFloat(x4.r, color.r)) && (CompareFloat(x4.g, color.g)) 
-  && (CompareFloat(x4.b, color.b)) && (CompareFloat(x4.a, color.a)))) {
-    fill_sample(sx, sy-1, color);
-  }
-  
 }
 
 // fill samples in the entire pixel specified by pixel coordinates
@@ -332,10 +273,10 @@ void SoftwareRendererImp::rasterize_line( float x0, float y0,
   // Extra credit (delete the line below and implement your own)
   //ref->rasterize_line_helper(x0, y0, x1, y1, target_w, target_h, color, this);
 
-  int xx0 = round(x0);
-  int xx1 = round(x1);
-  int yy0 = round(y0);
-  int yy1 = round(y1);
+  int xx0 = (int)floor(x0);
+  int xx1 = (int)floor(x1);
+  int yy0 = (int)floor(y0);
+  int yy1 = (int)floor(y1);
 
   int dx = abs(xx1 - xx0);
   int sx = xx0<xx1 ? 1 : -1;
@@ -356,7 +297,16 @@ void SoftwareRendererImp::rasterize_line( float x0, float y0,
       yy0 += sy;
     }
   }
-  
+
+}
+
+bool insideEdge(float x, float y, float x0, float y0, float x1, float y1) {
+  float dy = y1 - y0;
+  float dx = x1 - x0;
+  float c = y0 * (x1 - x0) - x0 * (y1 - y0);
+
+  float l = dy*x - dx*y + c;
+  return l <= 0;
 }
 
 void SoftwareRendererImp::rasterize_triangle( float x0, float y0,
@@ -365,12 +315,26 @@ void SoftwareRendererImp::rasterize_triangle( float x0, float y0,
                                               Color color ) {
   // Task 1: 
   // Implement triangle rasterization (you may want to call fill_sample here)
-  rasterize_line(x0, y0, x1, y1, color);
-  rasterize_line(x1, y1, x2, y2, color);
-  rasterize_line(x2, y2, x0, y0, color);
-  float xc = (x0+x1+x2)/3;
-  float yc = (y0+y1+y2)/3;
-  fill_sample(int(xc), int(yc), color);
+
+  float maxX = fmax(x0, fmax(x1, x2));
+  float minX = fmin(x0, fmin(x1, x2));
+
+  float maxY = fmax(y0, fmax(y1, y2));
+  float minY = fmin(y0, fmin(y1, y2));
+
+
+  for(int x = minX; x < maxX; x++) {
+    for (int y = minY; y < maxY; y++) {
+      if( insideEdge(x, y, x0, y0, x1, y1) &&
+          insideEdge(x, y, x1, y1, x2, y2) &&
+          insideEdge(x, y, x2, y2, x0, y0)) {
+
+            fill_pixel(x, y, color);
+
+          }
+    }
+  }
+
 }
 
 void SoftwareRendererImp::rasterize_image( float x0, float y0,
