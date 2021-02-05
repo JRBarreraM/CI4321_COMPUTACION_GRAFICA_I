@@ -32,3 +32,6 @@
 
 # Build
 */build/*
+
+# Vim
+*/.ccls-cache/
