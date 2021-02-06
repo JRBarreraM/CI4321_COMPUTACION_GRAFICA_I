@@ -11,16 +11,66 @@ using namespace std;
 
 namespace CS248 {
 
+unsigned char* supersample_target;
+
+// formula para pixel (4 * (x + y * target_w))
+// 
+
 // fill a sample location with color
 void SoftwareRendererImp::fill_sample(int sx, int sy, const Color &color) {
+  // check bounds
+  // sx = sample number
+  // sy = pixel number
 
+  // [1.1.r, 1.1.g, 1.1.b, 1.1.a, 1.2.r, 1.2.g, 1.2.b, 1.2.a, 1.3.r, 1.3.g, 1.3.b, 1.3.a, 1.4.r, 1.4.g, 1.4.b, 1.4.a, 2.1.r, ..]
+
+  int sampleRateSquared = sample_rate * sample_rate;
+	if (sx < 0 || sx >= sampleRateSquared) return;
+	if (sy < 0 || sy >= target_w*target_h) return;
+
+	supersample_target[4 * sampleRateSquared * sy + sx*4] = (uint8_t)(color.r * 255);
+	supersample_target[4 * sampleRateSquared * sy + sx*4 + 1] = (uint8_t)(color.g * 255);
+	supersample_target[4 * sampleRateSquared * sy + sx*4 + 2] = (uint8_t)(color.b * 255);
+	supersample_target[4 * sampleRateSquared * sy + sx*4 + 3] = (uint8_t)(color.a * 255);
 }
 
 // fill samples in the entire pixel specified by pixel coordinates
 void SoftwareRendererImp::fill_pixel(int x, int y, const Color &color) {
 
 	// Task 2: Re-implement this function
+  int sampleRateSquared = sample_rate * sample_rate;
+  
+  if (x < 0 || x >= target_w) return;
+	if (y < 0 || y >= target_h) return;
 
+	Color pixel_color;
+	float inv255 = 1.0 / 255.0;
+  int r = 0;
+  int g = 0;
+  int b = 0;
+  int a = 0;
+  for (int sx = 0; sx < sampleRateSquared; sx++) {
+    r += supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + sx * 4];
+    g += supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + (sx * 4) + 1];
+    b += supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + (sx * 4) + 2];
+    a += supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + (sx * 4) + 3];
+  }
+  pixel_color.r = r/sampleRateSquared;
+  pixel_color.g = g/sampleRateSquared;
+  pixel_color.b = b/sampleRateSquared;
+  pixel_color.a = a/sampleRateSquared;
+
+	pixel_color = ref->alpha_blending_helper(pixel_color, color);
+
+  for (int sx = 0; sx < sampleRateSquared; sx++) {
+    supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + sx * 4] = (uint8_t)(pixel_color.r * 255);
+    supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + (sx * 4) + 1] = (uint8_t)(pixel_color.g * 255);
+    supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + (sx * 4) + 2] = (uint8_t)(pixel_color.b * 255);
+    supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + (sx * 4) + 3] = (uint8_t)(pixel_color.a * 255);
+  }
+
+
+/*
 	// check bounds
 	if (x < 0 || x >= target_w) return;
 	if (y < 0 || y >= target_h) return;
@@ -38,7 +88,7 @@ void SoftwareRendererImp::fill_pixel(int x, int y, const Color &color) {
 	render_target[4 * (x + y * target_w) + 1] = (uint8_t)(pixel_color.g * 255);
 	render_target[4 * (x + y * target_w) + 2] = (uint8_t)(pixel_color.b * 255);
 	render_target[4 * (x + y * target_w) + 3] = (uint8_t)(pixel_color.a * 255);
-
+*/
 }
 
 void SoftwareRendererImp::draw_svg( SVG& svg ) {
@@ -73,6 +123,10 @@ void SoftwareRendererImp::set_sample_rate( size_t sample_rate ) {
   // You may want to modify this for supersampling support
   this->sample_rate = sample_rate;
 
+  //Crear Arreglo Supersampling_target
+  supersample_target = (unsigned char*) malloc(4 * target_h * target_w * sample_rate * sample_rate * sizeof(uint8_t));
+  memset(supersample_target, 255, 4 * target_w * target_h * sample_rate * sample_rate);
+
 }
 
 void SoftwareRendererImp::set_render_target( unsigned char* render_target,
@@ -83,6 +137,8 @@ void SoftwareRendererImp::set_render_target( unsigned char* render_target,
   this->render_target = render_target;
   this->target_w = width;
   this->target_h = height;
+  supersample_target = (unsigned char*) malloc(4 * target_h * target_w * sample_rate * sample_rate * sizeof(uint8_t));
+  memset(supersample_target, 255, 4 * target_w * target_h * sample_rate * sample_rate);
 
 }
 
@@ -259,11 +315,13 @@ void SoftwareRendererImp::rasterize_point( float x, float y, Color color ) {
 
   // fill sample - NOT doing alpha blending!
   // TODO: Call fill_pixel here to run alpha blending
+  fill_pixel(sx, sy, color);
+  /*
   render_target[4 * (sx + sy * target_w)] = (uint8_t)(color.r * 255);
   render_target[4 * (sx + sy * target_w) + 1] = (uint8_t)(color.g * 255);
   render_target[4 * (sx + sy * target_w) + 2] = (uint8_t)(color.b * 255);
   render_target[4 * (sx + sy * target_w) + 3] = (uint8_t)(color.a * 255);
-
+  */
 }
 
 void SoftwareRendererImp::rasterize_line( float x0, float y0,
@@ -272,7 +330,6 @@ void SoftwareRendererImp::rasterize_line( float x0, float y0,
 
   // Extra credit (delete the line below and implement your own)
   //ref->rasterize_line_helper(x0, y0, x1, y1, target_w, target_h, color, this);
-
   int xx0 = (int)floor(x0);
   int xx1 = (int)floor(x1);
   int yy0 = (int)floor(y0);
@@ -284,7 +341,7 @@ void SoftwareRendererImp::rasterize_line( float x0, float y0,
   int sy = yy0<yy1 ? 1 : -1;
   int err = dx+dy;
   while(true) {
-    rasterize_point(xx0, yy0, color);
+    fill_pixel(xx0, yy0, color);
     if (xx0 == xx1 && yy0 == yy1) break;
     int e2 = 2*err;
     if (e2 >= dy){
@@ -297,7 +354,6 @@ void SoftwareRendererImp::rasterize_line( float x0, float y0,
       yy0 += sy;
     }
   }
-
 }
 
 bool insideEdge(float x, float y, float x0, float y0, float x1, float y1) {
@@ -322,19 +378,37 @@ void SoftwareRendererImp::rasterize_triangle( float x0, float y0,
   float maxY = fmax(y0, fmax(y1, y2));
   float minY = fmin(y0, fmin(y1, y2));
 
+  double invSampleRate = 1.0 / sample_rate;
+  double halveInvSampleRate = invSampleRate / 2;
+  int sampleRateSquared = sample_rate * sample_rate;
+
+  float stepX, stepY;
 
   for(int x = minX; x < maxX; x++) {
     for (int y = minY; y < maxY; y++) {
-      if( insideEdge(x + 0.5, y + 0.5, x0, y0, x1, y1) &&
-          insideEdge(x + 0.5 ,y + 0.5, x1, y1, x2, y2) &&
-          insideEdge(x + 0.5, y + 0.5, x2, y2, x0, y0)) {
 
-            fill_pixel(x, y, color);
+      for (int sx = 0; sx < sample_rate; sx++) {
+        stepX = halveInvSampleRate + invSampleRate*sx;
 
+        for (int sy = 0; sy < sample_rate; sy++) {
+          // 1/(2*SR) + (1/SR)*Sx
+          stepY = halveInvSampleRate + invSampleRate*sy;
+          if( insideEdge(x + stepX, y + stepY, x0, y0, x1, y1) &&
+              insideEdge(x + stepX ,y + stepY, x1, y1, x2, y2) &&
+              insideEdge(x + stepX, y + stepY, x2, y2, x0, y0)) {
+            
+            int sampleX = sx + sy * sample_rate;  // sample number
+            int sampleY = x + y * target_w;       // pixel number
+
+            fill_sample(sampleX, sampleY, color);
+
+            // [1.1.r, 1.1.g, 1.1.b, 1.1.a, 1.2.r, 1.2.g, 1.2.b, 1.2.a, 1.3.r, 1.3.g, 1.3.b, 1.3.a, 1.4.r, 1.4.g, 1.4.b, 1.4.a, 2.1.r, ..]
+          
           }
+        }
+      }
     }
   }
-
 }
 
 void SoftwareRendererImp::rasterize_image( float x0, float y0,
@@ -351,6 +425,34 @@ void SoftwareRendererImp::resolve( void ) {
   // Task 2: 
   // Implement supersampling
   // You may also need to modify other functions marked with "Task 2".
+
+  int sampleRateSquared = sample_rate * sample_rate;
+
+  for(int x = 0; x < target_w; x++) {
+    for (int y = 0; y < target_h; y++) {
+      int r = 0;
+      int g = 0;
+      int b = 0;
+      int a = 0;
+
+      for (int sx = 0; sx < sampleRateSquared; sx++) {
+        r += supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + sx * 4];
+        g += supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + (sx * 4) + 1];
+        b += supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + (sx * 4) + 2];
+        a += supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + (sx * 4) + 3];
+      }
+
+      render_target[4 * (x + y * target_w)] = r/sampleRateSquared;
+      render_target[4 * (x + y * target_w) + 1] = g/sampleRateSquared;
+      render_target[4 * (x + y * target_w) + 2] = b/sampleRateSquared;
+      render_target[4 * (x + y * target_w) + 3] = a/sampleRateSquared;
+
+      // [1.1.r, 1.1.g, 1.1.b, 1.1.a, 1.2.r, 1.2.g, 1.2.b, 1.2.a, 1.3.r, 1.3.g, 1.3.b, 1.3.a, 1.4.r, 1.4.g, 1.4.b, 1.4.a, 2.1.r, ..]
+      
+    }
+  }
+  
+  //free(supersample_target);
   return;
 
 }
