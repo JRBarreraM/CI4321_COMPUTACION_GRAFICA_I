@@ -23,15 +23,24 @@ void SoftwareRendererImp::fill_sample(int sx, int sy, const Color &color) {
   // sy = pixel number
 
   // [1.1.r, 1.1.g, 1.1.b, 1.1.a, 1.2.r, 1.2.g, 1.2.b, 1.2.a, 1.3.r, 1.3.g, 1.3.b, 1.3.a, 1.4.r, 1.4.g, 1.4.b, 1.4.a, 2.1.r, ..]
-
+	float inv255 = 1.0 / 255.0;
   int sampleRateSquared = sample_rate * sample_rate;
 	if (sx < 0 || sx >= sampleRateSquared) return;
 	if (sy < 0 || sy >= target_w*target_h) return;
 
-	supersample_target[4 * sampleRateSquared * sy + sx*4] = (uint8_t)(color.r * 255);
-	supersample_target[4 * sampleRateSquared * sy + sx*4 + 1] = (uint8_t)(color.g * 255);
-	supersample_target[4 * sampleRateSquared * sy + sx*4 + 2] = (uint8_t)(color.b * 255);
-	supersample_target[4 * sampleRateSquared * sy + sx*4 + 3] = (uint8_t)(color.a * 255);
+  Color sample_color;
+  sample_color.r = supersample_target[4 * sampleRateSquared * sy + sx*4] * inv255;
+  sample_color.g = supersample_target[4 * sampleRateSquared * sy + sx*4 + 1] * inv255;
+  sample_color.b = supersample_target[4 * sampleRateSquared * sy + sx*4 + 2] * inv255;
+  sample_color.a = supersample_target[4 * sampleRateSquared * sy + sx*4 + 3] * inv255;
+
+	sample_color = alpha_blending(sample_color, color);
+  //sample_color = ref->alpha_blending_helper(sample_color, color);
+
+	supersample_target[4 * sampleRateSquared * sy + sx*4] = (uint8_t)(sample_color.r * 255);
+	supersample_target[4 * sampleRateSquared * sy + sx*4 + 1] = (uint8_t)(sample_color.g * 255);
+	supersample_target[4 * sampleRateSquared * sy + sx*4 + 2] = (uint8_t)(sample_color.b * 255);
+	supersample_target[4 * sampleRateSquared * sy + sx*4 + 3] = (uint8_t)(sample_color.a * 255);
 }
 
 // fill samples in the entire pixel specified by pixel coordinates
@@ -55,12 +64,13 @@ void SoftwareRendererImp::fill_pixel(int x, int y, const Color &color) {
     b += supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + (sx * 4) + 2];
     a += supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + (sx * 4) + 3];
   }
-  pixel_color.r = r/sampleRateSquared;
-  pixel_color.g = g/sampleRateSquared;
-  pixel_color.b = b/sampleRateSquared;
-  pixel_color.a = a/sampleRateSquared;
+  pixel_color.r = r/sampleRateSquared * inv255;
+  pixel_color.g = g/sampleRateSquared * inv255;
+  pixel_color.b = b/sampleRateSquared * inv255;
+  pixel_color.a = a/sampleRateSquared * inv255;
 
-	pixel_color = ref->alpha_blending_helper(pixel_color, color);
+	pixel_color = alpha_blending(pixel_color, color);
+	//pixel_color = ref->alpha_blending_helper(pixel_color, color);
 
   for (int sx = 0; sx < sampleRateSquared; sx++) {
     supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + sx * 4] = (uint8_t)(pixel_color.r * 255);
@@ -335,8 +345,8 @@ void SoftwareRendererImp::rasterize_line( float x0, float y0,
                                           Color color) {
 
   // Extra credit (delete the line below and implement your own)
-  //ref->rasterize_line_helper(x0, y0, x1, y1, target_w, target_h, color, this);
-  
+  ref->rasterize_line_helper(x0, y0, x1, y1, target_w, target_h, color, this);
+  /*
   int xx0 = (int)floor(x0);
   int xx1 = (int)floor(x1);
   int yy0 = (int)floor(y0);
@@ -361,6 +371,7 @@ void SoftwareRendererImp::rasterize_line( float x0, float y0,
       yy0 += sy;
     }
   }
+  */
 }
 
 bool insideTriangle(float x, float y,
@@ -496,7 +507,35 @@ Color SoftwareRendererImp::alpha_blending(Color pixel_color, Color color)
 {
   // Task 5
   // Implement alpha compositing
-  return pixel_color;
+  /*
+     Er, Eg, Eb    - Element color value
+     Ea            - Element alpha value
+     
+     Cr, Cg, Cb    - Canvas color value (before blending)
+     Ca            - Canvas alpha value (before blending)
+
+     Cr', Cg', Cb' - Canvas color value (after blending)
+     Ca'           - Canvas alpha value (after blending)
+
+     Ca' = 1 - (1 - Ea) * (1 - Ca)
+     Cr' = (1 - Ea) * Cr + Er
+     Cg' = (1 - Ea) * Cg + Eg
+     Cb' = (1 - Ea) * Cb + Eb
+  */
+  Color return_color = color;
+  color.r = color.r * color.a;
+  color.g = color.g * color.a;
+  color.b = color.b * color.a;
+
+  pixel_color.r = pixel_color.r * pixel_color.a;
+  pixel_color.g = pixel_color.g * pixel_color.a;
+  pixel_color.b = pixel_color.b * pixel_color.a;
+
+  return_color.a = 1 - (1 - color.a) * (1 - pixel_color.a);
+  return_color.r = (1 - color.a) * pixel_color.r + color.r;
+  return_color.g = (1 - color.a) * pixel_color.g + color.g;
+  return_color.b = (1 - color.a) * pixel_color.b + color.b;
+  return return_color;
 }
 
 
