@@ -96,6 +96,9 @@ void SoftwareRendererImp::draw_svg( SVG& svg ) {
   // set top level transformation
   transformation = canvas_to_screen;
 
+  supersample_target = (unsigned char*) malloc(4 * target_h * target_w * sample_rate * sample_rate * sizeof(uint8_t));
+  memset(supersample_target, 255, 4 * target_w * target_h * sample_rate * sample_rate);
+
   // draw all elements
   for ( size_t i = 0; i < svg.elements.size(); ++i ) {
     draw_element(svg.elements[i]);
@@ -123,10 +126,6 @@ void SoftwareRendererImp::set_sample_rate( size_t sample_rate ) {
   // You may want to modify this for supersampling support
   this->sample_rate = sample_rate;
 
-  //Crear Arreglo Supersampling_target
-  supersample_target = (unsigned char*) malloc(4 * target_h * target_w * sample_rate * sample_rate * sizeof(uint8_t));
-  memset(supersample_target, 255, 4 * target_w * target_h * sample_rate * sample_rate);
-
 }
 
 void SoftwareRendererImp::set_render_target( unsigned char* render_target,
@@ -137,8 +136,6 @@ void SoftwareRendererImp::set_render_target( unsigned char* render_target,
   this->render_target = render_target;
   this->target_w = width;
   this->target_h = height;
-  supersample_target = (unsigned char*) malloc(4 * target_h * target_w * sample_rate * sample_rate * sizeof(uint8_t));
-  memset(supersample_target, 255, 4 * target_w * target_h * sample_rate * sample_rate);
 
 }
 
@@ -146,6 +143,12 @@ void SoftwareRendererImp::draw_element( SVGElement* element ) {
 
 	// Task 3 (part 1):
 	// Modify this to implement the transformation stack
+
+  // push transformation matrix
+  Matrix3x3 transform_save = transformation;
+
+  // set object transformation
+  transformation = transformation * element->transform;
 
 	switch (element->type) {
 	case POINT:
@@ -175,6 +178,9 @@ void SoftwareRendererImp::draw_element( SVGElement* element ) {
 	default:
 		break;
 	}
+
+  // pop transformation matrix
+  transformation = transform_save;
 
 }
 
@@ -330,6 +336,7 @@ void SoftwareRendererImp::rasterize_line( float x0, float y0,
 
   // Extra credit (delete the line below and implement your own)
   //ref->rasterize_line_helper(x0, y0, x1, y1, target_w, target_h, color, this);
+  
   int xx0 = (int)floor(x0);
   int xx1 = (int)floor(x1);
   int yy0 = (int)floor(y0);
@@ -354,6 +361,32 @@ void SoftwareRendererImp::rasterize_line( float x0, float y0,
       yy0 += sy;
     }
   }
+}
+
+bool insideTriangle(float x, float y,
+                    float x0, float y0,
+                    float x1, float y1,
+                    float x2, float y2) {
+  
+  float dy = y1 - y0;
+  float dx = x1 - x0;
+  float c = y0 * (x1 - x0) - x0 * (y1 - y0);
+
+  float l1 = dy*x - dx*y + c;
+
+  dy = y2 - y1;
+  dx = x2 - x1;
+  c = y1 * (x2 - x1) - x1 * (y2 - y1);
+
+  float l2 = dy*x - dx*y + c;
+
+  dy = y0 - y2;
+  dx = x0 - x2;
+  c = y2 * (x0 - x2) - x2 * (y0 - y2);
+
+  float l3 = dy*x - dx*y + c;
+
+  return (l1 <= 0 && l2 <= 0 && l3 <= 0) || (l1 >= 0 && l2 >= 0 && l3 >= 0);
 }
 
 bool insideEdge(float x, float y, float x0, float y0, float x1, float y1) {
@@ -393,10 +426,12 @@ void SoftwareRendererImp::rasterize_triangle( float x0, float y0,
         for (int sy = 0; sy < sample_rate; sy++) {
           // 1/(2*SR) + (1/SR)*Sx
           stepY = halveInvSampleRate + invSampleRate*sy;
+          /*
           if( insideEdge(x + stepX, y + stepY, x0, y0, x1, y1) &&
               insideEdge(x + stepX ,y + stepY, x1, y1, x2, y2) &&
               insideEdge(x + stepX, y + stepY, x2, y2, x0, y0)) {
-            
+          */
+          if (insideTriangle(x + stepX, y + stepY, x0, y0, x1, y1, x2, y2)){
             int sampleX = sx + sy * sample_rate;  // sample number
             int sampleY = x + y * target_w;       // pixel number
 
