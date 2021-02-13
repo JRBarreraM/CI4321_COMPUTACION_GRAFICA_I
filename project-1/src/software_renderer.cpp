@@ -14,7 +14,6 @@ namespace CS248 {
 unsigned char* supersample_target;
 
 // formula para pixel (4 * (x + y * target_w))
-// 
 
 // fill a sample location with color
 void SoftwareRendererImp::fill_sample(int sx, int sy, const Color &color) {
@@ -35,7 +34,6 @@ void SoftwareRendererImp::fill_sample(int sx, int sy, const Color &color) {
   sample_color.a = supersample_target[4 * sampleRateSquared * sy + sx*4 + 3] * inv255;
 
 	sample_color = alpha_blending(sample_color, color);
-  //sample_color = ref->alpha_blending_helper(sample_color, color);
 
 	supersample_target[4 * sampleRateSquared * sy + sx*4] = (uint8_t)(sample_color.r * 255);
 	supersample_target[4 * sampleRateSquared * sy + sx*4 + 1] = (uint8_t)(sample_color.g * 255);
@@ -70,7 +68,6 @@ void SoftwareRendererImp::fill_pixel(int x, int y, const Color &color) {
   pixel_color.a = a/sampleRateSquared * inv255;
 
 	pixel_color = alpha_blending(pixel_color, color);
-	//pixel_color = ref->alpha_blending_helper(pixel_color, color);
 
   for (int sx = 0; sx < sampleRateSquared; sx++) {
     supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + sx * 4] = (uint8_t)(pixel_color.r * 255);
@@ -78,27 +75,6 @@ void SoftwareRendererImp::fill_pixel(int x, int y, const Color &color) {
     supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + (sx * 4) + 2] = (uint8_t)(pixel_color.b * 255);
     supersample_target[ 4 * sampleRateSquared * (x + y * target_w) + (sx * 4) + 3] = (uint8_t)(pixel_color.a * 255);
   }
-
-
-/*
-	// check bounds
-	if (x < 0 || x >= target_w) return;
-	if (y < 0 || y >= target_h) return;
-
-	Color pixel_color;
-	float inv255 = 1.0 / 255.0;
-	pixel_color.r = render_target[4 * (x + y * target_w)] * inv255;
-	pixel_color.g = render_target[4 * (x + y * target_w) + 1] * inv255;
-	pixel_color.b = render_target[4 * (x + y * target_w) + 2] * inv255;
-	pixel_color.a = render_target[4 * (x + y * target_w) + 3] * inv255;
-
-	pixel_color = ref->alpha_blending_helper(pixel_color, color);
-
-	render_target[4 * (x + y * target_w)] = (uint8_t)(pixel_color.r * 255);
-	render_target[4 * (x + y * target_w) + 1] = (uint8_t)(pixel_color.g * 255);
-	render_target[4 * (x + y * target_w) + 2] = (uint8_t)(pixel_color.b * 255);
-	render_target[4 * (x + y * target_w) + 3] = (uint8_t)(pixel_color.a * 255);
-*/
 }
 
 void SoftwareRendererImp::draw_svg( SVG& svg ) {
@@ -154,10 +130,8 @@ void SoftwareRendererImp::draw_element( SVGElement* element ) {
 	// Task 3 (part 1):
 	// Modify this to implement the transformation stack
 
-  // push transformation matrix
   Matrix3x3 transform_save = transformation;
 
-  // set object transformation
   transformation = transformation * element->transform;
 
 	switch (element->type) {
@@ -189,7 +163,6 @@ void SoftwareRendererImp::draw_element( SVGElement* element ) {
 		break;
 	}
 
-  // pop transformation matrix
   transformation = transform_save;
 
 }
@@ -294,7 +267,7 @@ void SoftwareRendererImp::draw_polygon( Polygon& polygon ) {
 
 void SoftwareRendererImp::draw_ellipse( Ellipse& ellipse ) {
 
-  // Extra credit 
+  // Extra credit
 
 }
 
@@ -332,12 +305,6 @@ void SoftwareRendererImp::rasterize_point( float x, float y, Color color ) {
   // fill sample - NOT doing alpha blending!
   // TODO: Call fill_pixel here to run alpha blending
   fill_pixel(sx, sy, color);
-  /*
-  render_target[4 * (sx + sy * target_w)] = (uint8_t)(color.r * 255);
-  render_target[4 * (sx + sy * target_w) + 1] = (uint8_t)(color.g * 255);
-  render_target[4 * (sx + sy * target_w) + 2] = (uint8_t)(color.b * 255);
-  render_target[4 * (sx + sy * target_w) + 3] = (uint8_t)(color.a * 255);
-  */
 }
 
 void SoftwareRendererImp::rasterize_line( float x0, float y0,
@@ -345,8 +312,8 @@ void SoftwareRendererImp::rasterize_line( float x0, float y0,
                                           Color color) {
 
   // Extra credit (delete the line below and implement your own)
-  ref->rasterize_line_helper(x0, y0, x1, y1, target_w, target_h, color, this);
-  /*
+  //ref->rasterize_line_helper(x0, y0, x1, y1, target_w, target_h, color, this);
+
   int xx0 = (int)floor(x0);
   int xx1 = (int)floor(x1);
   int yy0 = (int)floor(y0);
@@ -371,7 +338,7 @@ void SoftwareRendererImp::rasterize_line( float x0, float y0,
       yy0 += sy;
     }
   }
-  */
+
 }
 
 bool insideTriangle(float x, float y,
@@ -498,7 +465,7 @@ void SoftwareRendererImp::resolve( void ) {
     }
   }
   
-  //free(supersample_target);
+  free(supersample_target);
   return;
 
 }
