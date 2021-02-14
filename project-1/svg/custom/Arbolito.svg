@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.4, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+width="100.0px"
+height="100.0px"
+viewBox="0 0 100.0 100.0" enable-background="new 0 0 100.0 100.0"
+xml:space="preserve">
+
+<!-- punta -->
+<polygon fill="#008000" points="30.0,30.0 70.0,30.0 50.0,10.0 "/>
+<!-- medio -->
+<polygon fill="#008000" points="10.0,52.0 90.0,52.0 50.0,22.0 "/>
+<!-- base -->
+<polygon fill="#008000" points="1.0,72.0 99.0,72.0 50.0,40.0 "/>
+<!-- base -->
+<polygon fill="#964B00" points="40.0,72.0 60.0,72.0 40.0,100.0"/>
+<polygon fill="#964B00" points="40.0,100.0 60.0,72.0 60.0,100.0"/>
+<!-- star -->
+<polygon fill="#FFFF00" points="46.0,5.0 54.0,5.0 50.0,12.0 "/>
+<polygon fill="#FFFF00" points="46.0,10.0 54.0,10.0 50.0,2.0 "/>
+
+<rect x="85.0" y="65.0" fill="#ff0000" width="1" height="1"/>
+<rect x="80.0" y="65.0" fill="#ff0000" width="1" height="1"/>
+<rect x="75.0" y="65.0" fill="#ff0000" width="1" height="1"/>
+<rect x="70.0" y="65.0" fill="#ff0000" width="1" height="1"/>
+<rect x="65.0" y="65.0" fill="#ff0000" width="1" height="1"/>
+<rect x="60.0" y="65.0" fill="#ff0000" width="1" height="1"/>
+<rect x="55.0" y="65.0" fill="#ff0000" width="1" height="1"/>
+<rect x="50.0" y="65.0" fill="#ff0000" width="1" height="1"/>
+<rect x="45.0" y="65.0" fill="#ff0000" width="1" height="1"/>
+<rect x="40.0" y="65.0" fill="#ff0000" width="1" height="1"/>
+<rect x="35.0" y="65.0" fill="#ff0000" width="1" height="1"/>
+<rect x="30.0" y="65.0" fill="#ff0000" width="1" height="1"/>
+<rect x="25.0" y="65.0" fill="#ff0000" width="1" height="1"/>
+<rect x="20.0" y="65.0" fill="#ff0000" width="1" height="1"/>
+<rect x="15.0" y="65.0" fill="#ff0000" width="1" height="1"/>
+
+<rect x="75.0" y="45.0" fill="#ff0000" width="1" height="1"/>
+<rect x="70.0" y="45.0" fill="#ff0000" width="1" height="1"/>
+<rect x="65.0" y="45.0" fill="#ff0000" width="1" height="1"/>
+<rect x="60.0" y="45.0" fill="#ff0000" width="1" height="1"/>
+<rect x="55.0" y="45.0" fill="#ff0000" width="1" height="1"/>
+<rect x="50.0" y="45.0" fill="#ff0000" width="1" height="1"/>
+<rect x="45.0" y="45.0" fill="#ff0000" width="1" height="1"/>
+<rect x="40.0" y="45.0" fill="#ff0000" width="1" height="1"/>
+<rect x="35.0" y="45.0" fill="#ff0000" width="1" height="1"/>
+<rect x="30.0" y="45.0" fill="#ff0000" width="1" height="1"/>
+<rect x="25.0" y="45.0" fill="#ff0000" width="1" height="1"/>
+
+<rect x="60.0" y="25.0" fill="#ff0000" width="1" height="1"/>
+<rect x="55.0" y="25.0" fill="#ff0000" width="1" height="1"/>
+<rect x="50.0" y="25.0" fill="#ff0000" width="1" height="1"/>
+<rect x="45.0" y="25.0" fill="#ff0000" width="1" height="1"/>
+<rect x="40.0" y="25.0" fill="#ff0000" width="1" height="1"/>
+
+</svg>
