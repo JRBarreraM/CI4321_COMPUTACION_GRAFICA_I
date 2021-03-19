@@ -44,10 +44,37 @@ Matrix4x4 createPerspectiveMatrix(float fovy, float aspect, float near, float fa
 
 Matrix4x4 createWorldToCameraMatrix(const Vector3D& eye, const Vector3D& at, const Vector3D& up) {
 
-  // TODO CS248: Camera Matrix
-  // Compute the matrix that transforms a point in world space to a point in camera space.
+    // TODO CS248: Camera Matrix
+    // Compute the matrix that transforms a point in world space to a point in camera space.
 
-  return Matrix4x4::translation(Vector3D(-20,0,-150));
+    // SOURCE: Lamina 50. Coordinates Spaces and Transformations
+    // Se calculan solo las direcciones puestos que no necesitamos las magnitudes.
+    Vector3D W = (at - eye).unit(); // Dirección de la camara al objeto.
+    Vector3D yAxis = Vector3D(0.0, 1.0, 0.0);
+    Vector3D U = cross(W, yAxis).unit(); // Vector perpendicular a W y cualquier vector en la dirección de up, en este caso, Y.
+    Vector3D V = up.unit(); // Y local a la camara.
+
+    // Se define la matriz de transformación para la rotación
+    // Matrix4x4 rot;
+    // rot[0][0] = U.x;    rot[0][1] = U.y;    rot[0][2] = U.z;    rot[0][3] = 0.0;
+    // rot[1][0] = V.x;    rot[1][1] = V.y;    rot[1][2] = V.z;    rot[1][3] = 0.0;
+    // rot[2][0] = -W.x;   rot[2][1] = -W.y;   rot[2][2] = -W.z;   rot[2][3] = 0.0;
+    // rot[3][0] = 0.0;    rot[3][1] = 0.0;    rot[3][2] = 0.0;    rot[3][3] = 1.0;
+
+    Matrix4x4 rot;
+    rot[0][0] = U.x;    rot[0][1] = V.x;    rot[0][2] = -W.x;   rot[0][3] = 0.0;
+    rot[1][0] = U.y;    rot[1][1] = V.y;    rot[1][2] = -W.y;   rot[1][3] = 0.0;
+    rot[2][0] = U.z;    rot[2][1] = V.z;    rot[2][2] = -W.z;   rot[2][3] = 0.0;
+    rot[3][0] = 0.0;    rot[3][1] = 0.0;    rot[3][2] = 0.0;    rot[3][3] = 1.0;
+
+    //Se define la matriz de traslación
+    Matrix4x4 tras = Matrix4x4::translation(eye);
+
+    //Propiedades
+    //The inverse of a translation matrix is the translation matrix with the opposite signs on each of the translation components.
+    //The inverse of a rotation matrix is the rotation matrix's transpose.
+    //The inverse of a matrix product is the product of the inverse matrices ordered in reverse.
+    return (rot * tras.inv());
 
 }
 
