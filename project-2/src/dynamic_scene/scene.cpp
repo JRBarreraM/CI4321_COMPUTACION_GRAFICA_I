@@ -47,7 +47,7 @@ Matrix4x4 createWorldToCameraMatrix(const Vector3D& eye, const Vector3D& at, con
     // TODO CS248: Camera Matrix
     // Compute the matrix that transforms a point in world space to a point in camera space.
 
-    // SOURCE: Lamina 50. Coordinates Spaces and Transformations
+    // SOURCE: Lamina 49. Coordinates Spaces and Transformations
     // Se calculan solo las direcciones puestos que no necesitamos las magnitudes.
     Vector3D W = (at - eye).unit(); // Dirección de la camara al objeto.
     Vector3D yAxis = Vector3D(0.0, 1.0, 0.0);
