@@ -13,6 +13,7 @@ uniform bool useMirrorBRDF;         // true if mirror brdf should be used (defau
 //
 
 uniform sampler2D diffuseTextureSampler;
+uniform sampler2D normalTextureSampler;
 
 
 //
@@ -131,21 +132,25 @@ void main(void)
     // perform normal map lookup if required
     vec3 N = vec3(0);
     if (useNormalMapping) {
-       // TODO: CS248 Normal Mapping:
-       // use tan2World in the normal map to compute the
-       // world space normal baaed on the normal map.
+        // TODO: CS248 Normal Mapping:
+        // use tan2World in the normal map to compute the
+        // world space normal baaed on the normal map.
 
-       // Note that values from the texture should be scaled by 2 and biased
-       // by negative -1 to covert positive values from the texture fetch, which
-       // lie in the range (0-1), to the range (-1,1).
-       //
-       // In other words:   tangent_space_normal = texture_value * 2.0 - 1.0;
+        // Note that values from the texture should be scaled by 2 and biased
+        // by negative -1 to covert positive values from the texture fetch, which
+        // lie in the range (0-1), to the range (-1,1).
+        //
+        // In other words:   tangent_space_normal = texture_value * 2.0 - 1.0;
 
-       // replace this line with your implementation
-       N = normalize(normal);
+        // replace this line with your implementation
+        
+        vec3 normalColor = texture(normalTextureSampler, texcoord).rgb;
+        vec3 tangent_space_normal = normalColor * 2.0 - 1.0;
+        vec3 world_space_normal = tan2world * tangent_space_normal;
+        N = normalize(world_space_normal);
 
     } else {
-       N = normalize(normal);
+        N = normalize(normal);
     }
 
     vec3 V = normalize(dir2camera);

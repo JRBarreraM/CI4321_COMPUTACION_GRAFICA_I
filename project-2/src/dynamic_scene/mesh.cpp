@@ -367,12 +367,17 @@ void Mesh::internalDraw(bool shadowPass, const Matrix4x4& worldToNDC) const {
 
         // bind texture samplers ///////////////////////////////////
 
-        if (doTextureMapping_)
-        	shader_->setTextureSampler("diffuseTextureSampler", diffuseTextureId_);
-
+        if (doTextureMapping_) {
+			shader_->setTextureSampler("diffuseTextureSampler", diffuseTextureId_);
+		}
+		
         // TODO CS248: Normal Mapping:
         // You want to pass the normal texture into the shader program.
         // See diffuseTextureSampler for an example of passing textures.
+		
+		if (doNormalMapping_) {
+			shader_->setTextureSampler("normalTextureSampler", normalTextureId_);
+		}
 
         // TODO CS248: Environment Mapping:
         // You want to pass the environment texture into the shader program.
