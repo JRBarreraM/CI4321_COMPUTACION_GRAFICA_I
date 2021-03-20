@@ -71,8 +71,24 @@ vec3 Phong_BRDF(vec3 L, vec3 V, vec3 N, vec3 diffuse_color, vec3 specular_color,
     // Implement diffuse and specular terms of the Phong
     // reflectance model here.
 
-    return diffuse_color;
+    //float ambientStrength = 5.0;
+    float diffuseStrength = 1.0;
+    float specularStrength = 1.0;
 
+    //vec3 ambient = vec3(0.0, 0.0, 0.0);
+
+    // difuse
+    float diff = max( dot( N, L ), 0.0 ); // Pendiente de normalizar N y L
+    vec3 diffuse = diff * diffuse_color * diffuseStrength;
+
+    // specular
+    vec3 reflectDir = -L + 2.0 * dot (L, N) * N; // Lamina 50 de material, lighting and shading
+    float spec = pow( max( dot( V, reflectDir ), 0.0 ), specular_exponent );
+    vec3 specular = specularStrength * spec * specular_color;
+
+    // Fuente general https://learnopengl.com/Lighting/Basic-Lighting
+
+    return ( /* ambient + */ diffuse + specular );
 }
 
 //
