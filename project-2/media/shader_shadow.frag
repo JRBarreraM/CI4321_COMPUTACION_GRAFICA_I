@@ -14,6 +14,7 @@ uniform bool useMirrorBRDF;         // true if mirror brdf should be used (defau
 
 uniform sampler2D diffuseTextureSampler;
 uniform sampler2D normalTextureSampler;
+uniform sampler2D environmentTextureSampler;
 
 
 //
@@ -80,7 +81,24 @@ vec3 Phong_BRDF(vec3 L, vec3 V, vec3 N, vec3 diffuse_color, vec3 specular_color,
     // Implement diffuse and specular terms of the Phong
     // reflectance model here.
 
-    return diffuse_color;
+    //float ambientStrength = 5.0;
+    float diffuseStrength = 1.0;
+    float specularStrength = 1.0;
+
+    //vec3 ambient = vec3(0.0, 0.0, 0.0);
+
+    // difuse
+    float diff = max( dot( N, L ), 0.0 ); // Pendiente de normalizar N y L
+    vec3 diffuse = diff * diffuse_color * diffuseStrength;
+
+    // specular
+    vec3 reflectDir = -L + 2.0 * dot (L, N) * N; // Lamina 50 de material, lighting and shading
+    float spec = pow( max( dot( V, reflectDir ), 0.0 ), specular_exponent );
+    vec3 specular = specularStrength * spec * specular_color;
+
+    // Fuente general https://learnopengl.com/Lighting/Basic-Lighting
+
+    return ( /* ambient + */ diffuse + specular );
 }
 
 //
@@ -249,8 +267,24 @@ void main(void)
         //       facing out area.  Smaller values of SMOOTHING will create hard spotlights.
 
         // CS248: remove this once you perform proper attenuation computations
-        intensity = vec3(0.5, 0.5, 0.5);
+        
+        float falloff = 1/(1 + pow(length(dir_to_surface), 2));
+        
+        float SMOOTHING = 0.2;
 
+        float inside;
+        if (angle > ((1.0 + SMOOTHING) * cone_angle)) {
+            inside = 0.0;
+        }
+        else if (angle < ((1.0 - SMOOTHING) * cone_angle)) {
+            inside = 1.0;
+        }
+        else {
+            float outer = (1.0 + SMOOTHING) * cone_angle;
+            float inner = (1.0 - SMOOTHING) * cone_angle;
+            inside = mix(0.0, 1.0, ((outer - angle) / (outer - inner)));
+            // https://learnopengl.com/Lighting/Light-casters
+        }
 
         // Render Shadows for all spot lights
         // CS248 TODO: Shadow Mapping: comute shadowing for spotlight i here 
@@ -259,7 +293,7 @@ void main(void)
 	    vec3 L = normalize(-spot_light_directions[i]);
 		vec3 brdf_color = Phong_BRDF(L, V, N, diffuseColor, specularColor, specularExponent);
 
-	    Lo += intensity * brdf_color;
+	    Lo += intensity * brdf_color * falloff * inside;
     }
 
     fragColor = vec4(Lo, 1);
