@@ -1,6 +1,4 @@
-// Unity built-in shader source. Copyright (c) 2016 Unity Technologies. MIT license (see license.txt)
-
-Shader "Sprites/Diffuse"
+Shader "Sprites/Test"
 {
     Properties
     {
@@ -41,11 +39,9 @@ Shader "Sprites/Diffuse"
             fixed4 color;
         };
 
-        float rand(float2 co)
-        {
-            return fract(sin(dot(co.xy ,float2(12.9898,78.233))) * 43758.5453);
-        }
-
+        float _R;
+        float _G;
+        float _B;
 
         void vert (inout appdata_full v, out Input o)
         {
@@ -55,10 +51,6 @@ Shader "Sprites/Diffuse"
             v.vertex = UnityPixelSnap (v.vertex);
             #endif
 
-            float time = float3(_Time.y, 0, 0);
-            float2 noise = rand(v.vertex.xyz).xy * _NoiseScale;
-            v.vertex.xy += noise;
-
             UNITY_INITIALIZE_OUTPUT(Input, o);
             o.color = v.color * _Color * _RendererColor;
         }
@@ -66,7 +58,7 @@ Shader "Sprites/Diffuse"
         void surf (Input IN, inout SurfaceOutput o)
         {
             fixed4 c = SampleSpriteTexture (IN.uv_MainTex) * IN.color;
-            o.Albedo = c.rgb * c.a;
+            o.Albedo = c.rgb * half4(_R, _G, _B, 0.1) * c.a;
             o.Alpha = c.a;
         }
         ENDCG
