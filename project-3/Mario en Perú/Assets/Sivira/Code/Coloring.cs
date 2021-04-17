@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Coloring : MonoBehaviour
 {
@@ -17,86 +18,84 @@ public class Coloring : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        for (int i = 0; i <= 360; i++)
+        {
+            Debug.Log("R: " + HSVToRGB(i)[0]);
+            Debug.Log("G: " + HSVToRGB(i)[1]);
+            Debug.Log("B: " + HSVToRGB(i)[2]);
+            Debug.Log("--------------------");
+        }
     }
 
-    public static RGB HSVToRGB(HSV hsv)
+    double[] HSVToRGB(int h)
     {
+        double[] rgb = {0.0, 0.0, 0.0};
         double r = 0, g = 0, b = 0;
+        int i;
+        double f, p, q, t;
 
-        if (hsv.S == 0)
-        {
-            r = hsv.V;
-            g = hsv.V;
-            b = hsv.V;
-        }
+        if (h == 360)
+            h = 0;
         else
+            h = h / 60;
+
+        i = (int)Math.Truncate(h * 1.0f);
+        f = h - i;
+
+        p = 100 * (1.0 - 100);
+        q = 100 * (1.0 - (100 * f));
+        t = 100 * (1.0 - (100 * (1.0 - f)));
+
+        switch (i)
         {
-            int i;
-            double f, p, q, t;
+            case 0:
+                r = 100;
+                g = t;
+                b = p;
+                break;
 
-            if (hsv.H == 360)
-                hsv.H = 0;
-            else
-                hsv.H = hsv.H / 60;
+            case 1:
+                r = q;
+                g = 100;
+                b = p;
+                break;
 
-            i = (int)Math.Truncate(hsv.H);
-            f = hsv.H - i;
+            case 2:
+                r = p;
+                g = 100;
+                b = t;
+                break;
 
-            p = hsv.V * (1.0 - hsv.S);
-            q = hsv.V * (1.0 - (hsv.S * f));
-            t = hsv.V * (1.0 - (hsv.S * (1.0 - f)));
+            case 3:
+                r = p;
+                g = q;
+                b = 100;
+                break;
 
-            switch (i)
-            {
-                case 0:
-                    r = hsv.V;
-                    g = t;
-                    b = p;
-                    break;
+            case 4:
+                r = t;
+                g = p;
+                b = 100;
+                break;
 
-                case 1:
-                    r = q;
-                    g = hsv.V;
-                    b = p;
-                    break;
-
-                case 2:
-                    r = p;
-                    g = hsv.V;
-                    b = t;
-                    break;
-
-                case 3:
-                    r = p;
-                    g = q;
-                    b = hsv.V;
-                    break;
-
-                case 4:
-                    r = t;
-                    g = p;
-                    b = hsv.V;
-                    break;
-
-                default:
-                    r = hsv.V;
-                    g = p;
-                    b = q;
-                    break;
-            }
-
+            default:
+                r = 100;
+                g = p;
+                b = q;
+                break;
         }
 
-        return new RGB((byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
+        rgb[0] = r * 255;
+        rgb[1] = g * 255;
+        rgb[2] = b * 255;
+
+        return rgb;
     }
 
     IEnumerator UpdateColor() 
     {
         for(;;) 
         {
-            Debug.Log(color);
-
             switch (color)
             {
                 case Colors.r:
