@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BoxBreaker : MonoBehaviour
 {
+    public AudioManager1 audMan;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +19,10 @@ public class BoxBreaker : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (((this.transform.position.y - col.collider.transform.position.y) > 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) < 1)) {
+        if (((this.transform.position.y - col.collider.transform.position.y) > 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) < 1))
+        {
+                audMan.Play("Block Destroy");
+                // animation destroy
                 print("BREAK");
         }
     }

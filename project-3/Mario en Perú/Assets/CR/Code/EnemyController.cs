@@ -5,8 +5,9 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
 
-    public float moveSpeed = 50f;
+    public float moveSpeed = 150f;
     private float direction = -1;
+    public AudioManager1 audMan;
 
     // Start is called before the first frame update
     void Start()
@@ -35,7 +36,7 @@ public class EnemyController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.CompareTag("Wall"))
+        if(col.gameObject.CompareTag("Wall") || col.gameObject.CompareTag("Enemy"))
         {
             direction *= -1;
         }
@@ -44,6 +45,7 @@ public class EnemyController : MonoBehaviour
         {
             if (((this.transform.position.y - col.collider.transform.position.y) < 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) < 1)) 
             {
+                audMan.Play("Enemy Death");
                 print("DEAD");
             }
         }

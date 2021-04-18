@@ -27,6 +27,7 @@ public class Mario1Controller2DScript : MonoBehaviour {
 	public Transform groundChecker;      //Gameobject required, placed where you wish "ground" to be detected from
 	private bool isGrounded;             //Check to see if we are grounded
 	[SerializeField] private LayerMask m_WhatIsGround;							// A mask determining what is ground to the character
+	public AudioManager1 audMan;
 
 
 
@@ -51,6 +52,7 @@ public class Mario1Controller2DScript : MonoBehaviour {
 
 		//If our player hit the jump key, then it's true that we jumped!
 		if (Input.GetButtonDown("Jump") && isGrounded){
+			audMan.Play("Mario Jump");
 			animator.SetBool("Jumping", true);
 			playerJumped = true;   //Our player jumped!
 			playerJumping = true;  //Our player is jumping!
@@ -117,15 +119,25 @@ public class Mario1Controller2DScript : MonoBehaviour {
 
 		if(col.gameObject.CompareTag("Mushroom"))
         {
+			audMan.Play("Mushroom");
+			GameObject.Destroy(col.gameObject);
             print("MUSHROOM");
         }
 
 		if(col.gameObject.CompareTag("Enemy"))
         {
-            if (!(((this.transform.position.y - col.collider.transform.position.y) < 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) < 1)))
+            if (!(((this.transform.position.y - col.collider.transform.position.y) > 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) < 1)))
             {
-                print("DEAD");
-            }
+				audMan.Stop("Main Theme");
+				audMan.Play("Mario Death");
+                print("MARIO DEAD");
+            } 
+			else
+			{
+				animator.SetBool("Jumping", true);
+				playerJumped = true;   //Our player jumped!
+				playerJumping = true;  //Our player is jumping!
+			}
         }
 
 		if(col.gameObject.CompareTag("DeathBarrier"))
