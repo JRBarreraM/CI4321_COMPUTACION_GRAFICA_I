@@ -43,7 +43,7 @@
      <Compile Include="Assets\Sivira\Code\Coloring.cs" />
      <Compile Include="Assets\CR\Code\CharacterController2D.cs" />
      <Compile Include="Assets\RB\Code\Soundv2.cs" />
-     <Compile Include="Assets\CR\Code\PlayerMovement.cs" />
+     <Compile Include="Assets\CR\Code\EnemyController.cs" />
      <None Include="Assets\Sivira\Shaders\Test.shader" />
     <Reference Include="UnityEngine">
         <HintPath>D:/Program Files (x86)/Unity/2020.3.3f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
