@@ -13,6 +13,7 @@ sysinfo.txt
 *.unitypackage
 [Ll]ogs/
 *.meta
+*.csproj
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
@@ -25,6 +26,7 @@ sysinfo.txt
 *.pidb.meta
 /*.suo
 /*.sln*
+*.sln
 /*.user
 /*.unityproj
 /*.booproj
