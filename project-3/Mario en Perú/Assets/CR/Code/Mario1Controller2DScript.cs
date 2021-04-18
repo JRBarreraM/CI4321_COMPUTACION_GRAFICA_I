@@ -69,7 +69,7 @@ public class Mario1Controller2DScript : MonoBehaviour {
 		}
 	}
 
-	void FixedUpdate (){
+	void FixedUpdate () {
 
 		animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
 
@@ -110,6 +110,27 @@ public class Mario1Controller2DScript : MonoBehaviour {
 		//If our player is holding the jump button and a little bit of time has passed...
 		if (playerJumping && Time.time - jumpTimer > delayToExtraJumpForce){
 			GetComponent<Rigidbody2D>().AddForce(new Vector2(0,extraJumpForce)); //... then add some additional force to the jump
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D col) {
+
+		if(col.gameObject.CompareTag("Mushroom"))
+        {
+            print("MUSHROOM");
+        }
+
+		if(col.gameObject.CompareTag("Enemy"))
+        {
+            if (!(((this.transform.position.y - col.collider.transform.position.y) < 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) < 1)))
+            {
+                print("DEAD");
+            }
+        }
+
+		if(col.gameObject.CompareTag("DeathBarrier"))
+		{
+			print("DEAD");
 		}
 	}
 }
