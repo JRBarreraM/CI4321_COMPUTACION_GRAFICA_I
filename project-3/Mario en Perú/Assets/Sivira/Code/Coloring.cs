@@ -5,126 +5,201 @@ using System;
 
 public class Coloring : MonoBehaviour
 {
-    public Renderer rend;
+    public Transform target;
 
-    private enum Colors {r, g, b, n};
-    private Colors color = Colors.n;
+    public struct RGB
+    {
+        private byte _r;
+        private byte _g;
+        private byte _b;
 
-    void Start() {
+        public RGB(byte r, byte g, byte b)
+        {
+            this._r = r;
+            this._g = g;
+            this._b = b;
+        }
+
+        public byte R
+        {
+            get { return this._r; }
+            set { this._r = value; }
+        }
+
+        public byte G
+        {
+            get { return this._g; }
+            set { this._g = value; }
+        }
+
+        public byte B
+        {
+            get { return this._b; }
+            set { this._b = value; }
+        }
+
+        public bool Equals(RGB rgb)
+        {
+            return (this.R == rgb.R) && (this.G == rgb.G) && (this.B == rgb.B);
+        }
+    }
+
+    public struct HSV
+    {
+        private double _h;
+        private double _s;
+        private double _v;
+
+        public HSV(double h, double s, double v)
+        {
+            this._h = h;
+            this._s = s;
+            this._v = v;
+        }
+
+        public double H
+        {
+            get { return this._h; }
+            set { this._h = value; }
+        }
+
+        public double S
+        {
+            get { return this._s; }
+            set { this._s = value; }
+        }
+
+        public double V
+        {
+            get { return this._v; }
+            set { this._v = value; }
+        }
+
+        public bool Equals(HSV hsv)
+        {
+            return (this.H == hsv.H) && (this.S == hsv.S) && (this.V == hsv.V);
+        }
+    }
+
+    private Renderer rend;
+
+    void Awake()
+    {
         rend = GetComponent<Renderer> ();
+        target = GameObject.Find("Mario").transform;
+    }
+
+    void Start()
+    {
         StartCoroutine("UpdateColor");
     }
 
-    // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i <= 360; i++)
-        {
-            Debug.Log("R: " + HSVToRGB(i)[0]);
-            Debug.Log("G: " + HSVToRGB(i)[1]);
-            Debug.Log("B: " + HSVToRGB(i)[2]);
-            Debug.Log("--------------------");
-        }
     }
 
-    double[] HSVToRGB(int h)
+    public static RGB HSVToRGB(HSV hsv)
     {
-        double[] rgb = {0.0, 0.0, 0.0};
         double r = 0, g = 0, b = 0;
-        int i;
-        double f, p, q, t;
 
-        if (h == 360)
-            h = 0;
-        else
-            h = h / 60;
-
-        i = (int)Math.Truncate(h * 1.0f);
-        f = h - i;
-
-        p = 100 * (1.0 - 100);
-        q = 100 * (1.0 - (100 * f));
-        t = 100 * (1.0 - (100 * (1.0 - f)));
-
-        switch (i)
+        if (hsv.S == 0)
         {
-            case 0:
-                r = 100;
-                g = t;
-                b = p;
-                break;
+            r = hsv.V;
+            g = hsv.V;
+            b = hsv.V;
+        }
+        else
+        {
+            int i;
+            double f, p, q, t;
 
-            case 1:
-                r = q;
-                g = 100;
-                b = p;
-                break;
+            if (hsv.H == 360)
+                hsv.H = 0;
+            else
+                hsv.H = hsv.H / 60;
 
-            case 2:
-                r = p;
-                g = 100;
-                b = t;
-                break;
+            i = (int)Math.Truncate(hsv.H);
+            f = hsv.H - i;
 
-            case 3:
-                r = p;
-                g = q;
-                b = 100;
-                break;
+            p = hsv.V * (1.0 - hsv.S);
+            q = hsv.V * (1.0 - (hsv.S * f));
+            t = hsv.V * (1.0 - (hsv.S * (1.0 - f)));
 
-            case 4:
-                r = t;
-                g = p;
-                b = 100;
-                break;
+            switch (i)
+            {
+                case 0:
+                    r = hsv.V;
+                    g = t;
+                    b = p;
+                    break;
 
-            default:
-                r = 100;
-                g = p;
-                b = q;
-                break;
+                case 1:
+                    r = q;
+                    g = hsv.V;
+                    b = p;
+                    break;
+
+                case 2:
+                    r = p;
+                    g = hsv.V;
+                    b = t;
+                    break;
+
+                case 3:
+                    r = p;
+                    g = q;
+                    b = hsv.V;
+                    break;
+
+                case 4:
+                    r = t;
+                    g = p;
+                    b = hsv.V;
+                    break;
+
+                default:
+                    r = hsv.V;
+                    g = p;
+                    b = q;
+                    break;
+            }
+
         }
 
-        rgb[0] = r * 255;
-        rgb[1] = g * 255;
-        rgb[2] = b * 255;
+        return new RGB((byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
+    }
 
-        return rgb;
+    void SetColor(int h) 
+    {
+        HSV hsv = new HSV(h * 1.0, 100.0, 100.0);
+        RGB rgb = HSVToRGB(hsv);
+
+        rend.material.SetFloat ("_R", rgb.R);
+        rend.material.SetFloat ("_G", rgb.G);
+        rend.material.SetFloat ("_B", rgb.B);
+
+        Debug.Log("Number:" + h + "--->" + rgb.R + ", " + rgb.G + ", " + rgb.B);
     }
 
     IEnumerator UpdateColor() 
     {
+        int h = 0;
+
         for(;;) 
         {
-            switch (color)
-            {
-                case Colors.r:
-                    rend.material.SetFloat ("_R", 1.0f);
-                    rend.material.SetFloat ("_G", 0.0f);
-                    rend.material.SetFloat ("_B", 0.0f);
-                    color = Colors.g;
-                    break;
-                case Colors.g:
-                    rend.material.SetFloat ("_R", 0.0f);
-                    rend.material.SetFloat ("_G", 1.0f);
-                    rend.material.SetFloat ("_B", 0.0f);
-                    color = Colors.b;
-                    break;
-                case Colors.b:
-                    rend.material.SetFloat ("_R", 0.0f);
-                    rend.material.SetFloat ("_G", 0.0f);
-                    rend.material.SetFloat ("_B", 1.0f);
-                    color = Colors.n;
-                    break;
-                case Colors.n:
-                    rend.material.SetFloat ("_R", 0.0f);
-                    rend.material.SetFloat ("_G", 0.0f);
-                    rend.material.SetFloat ("_B", 0.0f);
-                    color = Colors.r;
-                    break;
+            SetColor(h);
+            h++;
+            if (h >= 360){
+                h = 0;
+                //StopCoroutine("UpdateColor");
             }
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.01f);
         }
     }
+
+    /*
+        Fuente de HSVTORGB
+        https://www.programmingalgorithms.com/algorithm/hsv-to-rgb/
+    */
 }
