@@ -77,9 +77,6 @@ public class Mario1Controller2DScript : MonoBehaviour {
 			this.transform.localScale = new Vector3(-1,1,1);
 		}
 
-		Debug.Log(Input.GetAxis("Horizontal"));
-		
-
 		if(Input.GetAxis("Horizontal") > 0) {
 			this.transform.localScale = new Vector3(1,1,1);
 		}

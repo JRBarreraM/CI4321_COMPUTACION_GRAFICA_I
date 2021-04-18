@@ -22,6 +22,13 @@ public class EnemyController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if(GetComponent<Rigidbody2D>().velocity.x < 0) {
+			this.transform.localScale = new Vector3(-1,1,1);
+		}
+
+		if(GetComponent<Rigidbody2D>().velocity.x > 0) {
+			this.transform.localScale = new Vector3(1,1,1);
+		}
         GetComponent<Rigidbody2D>().velocity = new Vector2(direction * moveSpeed * Time.deltaTime,GetComponent<Rigidbody2D>().velocity.y);
 
     }
