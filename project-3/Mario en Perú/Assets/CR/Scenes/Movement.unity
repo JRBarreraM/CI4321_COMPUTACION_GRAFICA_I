@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audMan: {fileID: 1119961756}
-  Mushroom: {fileID: 0}
+  Mushroom: {fileID: 8448096815264535690, guid: cbb68b9eb8f939c459d4a3a1a1cf6cc2, type: 3}
 --- !u!61 &208388796
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -604,7 +604,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Mushroom
     clip: {fileID: 8300000, guid: efc98da673c16be49a6c9c5c94c5b995, type: 3}
-    volume: 1
+    volume: 0.21
     volumeVariance: 1
     pitch: 1
     pitchVariance: 0
