@@ -14,6 +14,7 @@ public class Mario1Controller2DScript : MonoBehaviour {
 	public float sprintDelay;        //How long until our sprint kicks in
 	private float sprintTimer;       //Used in calculating the sprint delay
 	private bool jumpedDuringSprint; //Used to see if we jumped during our sprint
+	public Animator animator;
 
 	//Jump related variables
 	public float initialJumpForce;       //How much force to give to our initial jump
@@ -45,12 +46,14 @@ public class Mario1Controller2DScript : MonoBehaviour {
 			{
 				isGrounded = true;
 				if (!wasGrounded)
+					animator.SetBool("Jumping", false);
 					OnLandEvent.Invoke();
 			}
 		}
 
 		//If our player hit the jump key, then it's true that we jumped!
 		if (Input.GetButtonDown("Jump") && isGrounded){
+			animator.SetBool("Jumping", true);
 			playerJumped = true;   //Our player jumped!
 			playerJumping = true;  //Our player is jumping!
 			jumpTimer = Time.time; //Set the time at which we jumped
@@ -69,6 +72,19 @@ public class Mario1Controller2DScript : MonoBehaviour {
 	}
 
 	void FixedUpdate (){
+
+		animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+
+		if(Input.GetAxis("Horizontal") < 0) {
+			this.transform.localScale = new Vector3(-1,1,1);
+		}
+
+		Debug.Log(Input.GetAxis("Horizontal"));
+		
+
+		if(Input.GetAxis("Horizontal") > 0) {
+			this.transform.localScale = new Vector3(1,1,1);
+		}
 
 		//If our player is holding the sprint button, we've held down the button for a while, and we're grounded...
 		//OR our player jumped while we were already sprinting...
