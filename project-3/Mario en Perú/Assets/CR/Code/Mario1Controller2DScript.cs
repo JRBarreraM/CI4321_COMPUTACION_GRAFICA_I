@@ -46,7 +46,6 @@ public class Mario1Controller2DScript : MonoBehaviour {
 				isGrounded = true;
 				if (!wasGrounded)
 					animator.SetBool("Jumping", false);
-					OnLandEvent.Invoke();
 			}
 		}
 
