@@ -31,6 +31,7 @@ public class EnemyController : MonoBehaviour
         if(col.gameObject.CompareTag("Wall"))
         {
             direction *= -1;
+            print("VOLTEO");
         }
     }
 }

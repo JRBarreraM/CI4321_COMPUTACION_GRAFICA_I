@@ -26,7 +26,6 @@ public class Mario1Controller2DScript : MonoBehaviour {
 	public Transform groundChecker;      //Gameobject required, placed where you wish "ground" to be detected from
 	private bool isGrounded;             //Check to see if we are grounded
 	[SerializeField] private LayerMask m_WhatIsGround;							// A mask determining what is ground to the character
-	public UnityEvent OnLandEvent;
 
 
 
@@ -34,7 +33,7 @@ public class Mario1Controller2DScript : MonoBehaviour {
 		//Casts a line between our ground checker gameobject and our player
 		//If the floor is between us and the groundchecker, this makes "isGrounded" true
 		
-		//isGrounded = Physics2D.Linecast(transform.position, groundChecker.position, 1 << LayerMask.NameToLayer("Ground"));
+		//isGrounded = Physics2D.Linecast(transform.position, groundChecker.position, 1 << LayerMask.NameToLayer("Ground") | 1 << LayerMask.NameToLayer("Wall"));
 		
 		bool wasGrounded = isGrounded;
 		isGrounded = false;
@@ -44,8 +43,6 @@ public class Mario1Controller2DScript : MonoBehaviour {
 			if (colliders[i].gameObject != gameObject)
 			{
 				isGrounded = true;
-				if (!wasGrounded)
-					OnLandEvent.Invoke();
 			}
 		}
 
