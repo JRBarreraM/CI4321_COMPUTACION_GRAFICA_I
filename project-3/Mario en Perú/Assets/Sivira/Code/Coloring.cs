@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class Coloring : MonoBehaviour
 {
@@ -82,6 +81,7 @@ public class Coloring : MonoBehaviour
     }
 
     private Renderer rend;
+    private double h;
 
     void Awake()
     {
@@ -92,10 +92,6 @@ public class Coloring : MonoBehaviour
     void Start()
     {
         StartCoroutine("UpdateColor");
-    }
-
-    void Update()
-    {
     }
 
     public static RGB HSVToRGB(HSV hsv)
@@ -118,7 +114,7 @@ public class Coloring : MonoBehaviour
             else
                 hsv.H = hsv.H / 60;
 
-            i = (int)Math.Truncate(hsv.H);
+            i = (int)Mathf.Round((float)hsv.H);
             f = hsv.H - i;
 
             p = hsv.V * (1.0 - hsv.S);
@@ -169,32 +165,33 @@ public class Coloring : MonoBehaviour
         return new RGB((byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
     }
 
-    void SetColor(int h) 
-    {
-        HSV hsv = new HSV(h * 1.0, 100.0, 100.0);
-        RGB rgb = HSVToRGB(hsv);
-
-        rend.material.SetFloat ("_R", rgb.R);
-        rend.material.SetFloat ("_G", rgb.G);
-        rend.material.SetFloat ("_B", rgb.B);
-
-        Debug.Log("Number:" + h + "--->" + rgb.R + ", " + rgb.G + ", " + rgb.B);
-    }
-
     IEnumerator UpdateColor() 
     {
-        int h = 0;
+        int frequency1 = 1;
+        int frequency2 = 2;
+        int frequency3 = 3;
+        int phase1 = 0;
+        int phase2 = 2;
+        int phase3 = 4;
+        int center = 128;
+        int width = 128;
+        int len = 50;
 
         for(;;) 
         {
-            SetColor(h);
-            h++;
-            if (h >= 360){
-                h = 0;
-                //StopCoroutine("UpdateColor");
-            }
+            float h1  = Random.Range(0, len);
+            float h2  = Random.Range(0, len);
+            float h3  = Random.Range(0, len);
 
-            yield return new WaitForSeconds(0.01f);
+            double red = Mathf.Sin(frequency1*h1 + phase1) * width + center;
+            double grn = Mathf.Sin(frequency2*h2 + phase2) * width + center;
+            double blu = Mathf.Sin(frequency3*h3 + phase3) * width + center;
+
+            rend.material.SetFloat ("_R", (float)red);
+            rend.material.SetFloat ("_G", (float)grn);
+            rend.material.SetFloat ("_B", (float)blu);
+
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
