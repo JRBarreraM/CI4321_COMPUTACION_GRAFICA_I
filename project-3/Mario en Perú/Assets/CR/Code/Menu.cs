@@ -7,13 +7,17 @@ public class Menu : MonoBehaviour
 {
     void Start()
     {
-        GameObject.Find("GameManager").GetComponent<AudioManager1>().Play("Game Over");
+        if(SceneManager.GetActiveScene().name == "Game Over")
+        {
+            GameObject.Find("GameManager").GetComponent<AudioManager1>().Play("Game Over");
+        }
     }
     public void RestartGame()
     {
         GameObject.Find("GameManager").GetComponent<AudioManager1>().Stop("Game Over");
+        GameObject.Find("GameManager").GetComponent<AudioManager1>().Stop("Win");
         GameObject.Find("GameManager").GetComponent<AudioManager1>().Play("Main Theme");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+        SceneManager.LoadScene("Movement");
     }
     public void QuitGame()
     {

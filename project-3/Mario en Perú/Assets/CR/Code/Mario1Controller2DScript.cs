@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 
 public class Mario1Controller2DScript : MonoBehaviour {
@@ -56,6 +57,7 @@ public class Mario1Controller2DScript : MonoBehaviour {
 			win = true;
 			audMan.Stop("Main Theme");
 			audMan.Play("Win");
+			Invoke("transition", 10.0f);
 		}
 
 		//Casts a line between our ground checker gameobject and our player
@@ -155,6 +157,10 @@ public class Mario1Controller2DScript : MonoBehaviour {
 				}
 			}
 		}
+	}
+	void transition()
+	{
+		SceneManager.LoadScene("Win");
 	}
 	void InvincibleStop()
 	{
