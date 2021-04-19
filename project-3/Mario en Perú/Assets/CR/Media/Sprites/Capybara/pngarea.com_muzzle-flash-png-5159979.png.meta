@@ -1,0 +1,708 @@
+fileFormatVersion: 2
+guid: bb1c201f78237de46be3171d6edb3557
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5219482889137847431
+    second: pngarea.com_muzzle-flash-png-5159979_0
+  - first:
+      213: 6468964262597603504
+    second: pngarea.com_muzzle-flash-png-5159979_1
+  - first:
+      213: 3081839325560611181
+    second: pngarea.com_muzzle-flash-png-5159979_2
+  - first:
+      213: 1053683532558125136
+    second: pngarea.com_muzzle-flash-png-5159979_3
+  - first:
+      213: 2773732620136909646
+    second: pngarea.com_muzzle-flash-png-5159979_4
+  - first:
+      213: 8755746645444443122
+    second: pngarea.com_muzzle-flash-png-5159979_5
+  - first:
+      213: -8806842739695585169
+    second: pngarea.com_muzzle-flash-png-5159979_6
+  - first:
+      213: 7642218200269938128
+    second: pngarea.com_muzzle-flash-png-5159979_7
+  - first:
+      213: 3581793666170636130
+    second: pngarea.com_muzzle-flash-png-5159979_8
+  - first:
+      213: -2959894256452074234
+    second: pngarea.com_muzzle-flash-png-5159979_9
+  - first:
+      213: 4315040468229708248
+    second: pngarea.com_muzzle-flash-png-5159979_10
+  - first:
+      213: 6097115955665765686
+    second: pngarea.com_muzzle-flash-png-5159979_11
+  - first:
+      213: -3043979554570790434
+    second: pngarea.com_muzzle-flash-png-5159979_12
+  - first:
+      213: -9078053075054338206
+    second: pngarea.com_muzzle-flash-png-5159979_13
+  - first:
+      213: -4048103372515586159
+    second: pngarea.com_muzzle-flash-png-5159979_14
+  - first:
+      213: 1264822485507390170
+    second: pngarea.com_muzzle-flash-png-5159979_15
+  - first:
+      213: -7756596763527815062
+    second: pngarea.com_muzzle-flash-png-5159979_16
+  - first:
+      213: -4212373068663553193
+    second: pngarea.com_muzzle-flash-png-5159979_17
+  - first:
+      213: -1138190763652082049
+    second: pngarea.com_muzzle-flash-png-5159979_18
+  - first:
+      213: -5830567876188091271
+    second: pngarea.com_muzzle-flash-png-5159979_19
+  - first:
+      213: -7414467228559750753
+    second: pngarea.com_muzzle-flash-png-5159979_20
+  - first:
+      213: -1030478220357110223
+    second: pngarea.com_muzzle-flash-png-5159979_21
+  - first:
+      213: -4617217042623545232
+    second: pngarea.com_muzzle-flash-png-5159979_22
+  - first:
+      213: -3308177765260469956
+    second: pngarea.com_muzzle-flash-png-5159979_23
+  - first:
+      213: -5934931663182908141
+    second: pngarea.com_muzzle-flash-png-5159979_24
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 322
+        width: 37
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78c7a4e98045f6840800000000000000
+      internalID: 5219482889137847431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_1
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 321
+        width: 41
+        height: 39
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b0b3d809b066c950800000000000000
+      internalID: 6468964262597603504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_2
+      rect:
+        serializedVersion: 2
+        x: 137
+        y: 321
+        width: 44
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d61aedec984e4ca20800000000000000
+      internalID: 3081839325560611181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_3
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 321
+        width: 43
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0584ec7179f6f9e00800000000000000
+      internalID: 1053683532558125136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_4
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 320
+        width: 45
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4b8c254f174e7620800000000000000
+      internalID: 2773732620136909646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_5
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 239
+        width: 48
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fbb8012f29a28970800000000000000
+      internalID: 8755746645444443122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_6
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 239
+        width: 51
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6877bb503fc7c580800000000000000
+      internalID: -8806842739695585169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_7
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 239
+        width: 53
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dd5d1386fc9e0a60800000000000000
+      internalID: 7642218200269938128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_8
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 238
+        width: 55
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26748dabc5615b130800000000000000
+      internalID: 3581793666170636130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_9
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 238
+        width: 54
+        height: 57
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 605847f1bd75ce6d0800000000000000
+      internalID: -2959894256452074234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_10
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 156
+        width: 54
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d9544c917a12eb30800000000000000
+      internalID: 4315040468229708248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_11
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 155
+        width: 55
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63503d368ae4d9450800000000000000
+      internalID: 6097115955665765686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_12
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 155
+        width: 56
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed9914a09bc91c5d0800000000000000
+      internalID: -3043979554570790434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_13
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 155
+        width: 57
+        height: 60
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26f5e3963d6440280800000000000000
+      internalID: -9078053075054338206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_14
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 159
+        width: 55
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19fc5233e6f32d7c0800000000000000
+      internalID: -4048103372515586159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_15
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 80
+        width: 54
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ada3898695d8d8110800000000000000
+      internalID: 1264822485507390170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_16
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 80
+        width: 54
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a60eafbf6580b5490800000000000000
+      internalID: -7756596763527815062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_17
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 81
+        width: 54
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75303ec1305aa85c0800000000000000
+      internalID: -4212373068663553193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_18
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 82
+        width: 54
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7613e5e7855430f0800000000000000
+      internalID: -1138190763652082049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_19
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 82
+        width: 54
+        height: 55
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97c41058869a51fa0800000000000000
+      internalID: -5830567876188091271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_20
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 93
+        width: 5
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f99cbe2d6558a1990800000000000000
+      internalID: -7414467228559750753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_21
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 0
+        width: 46
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13676dea48103b1f0800000000000000
+      internalID: -1030478220357110223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_22
+      rect:
+        serializedVersion: 2
+        x: 75
+        y: 22
+        width: 34
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0704b8310995cefb0800000000000000
+      internalID: -4617217042623545232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_23
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 33
+        width: 34
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c39ddc799ddf612d0800000000000000
+      internalID: -3308177765260469956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: pngarea.com_muzzle-flash-png-5159979_24
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 35
+        width: 37
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 315b3c1d813e2ada0800000000000000
+      internalID: -5934931663182908141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
