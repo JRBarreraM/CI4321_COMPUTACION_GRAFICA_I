@@ -151,45 +151,49 @@ public class Mario1Controller2DScript : MonoBehaviour {
 		GetComponent<BoxCollider2D>().enabled = false;
 	}
 	void OnCollisionEnter2D(Collision2D col) {
-
-		if(col.gameObject.CompareTag("Mushroom"))
-        {
-			audMan.Stop("Main Theme");
-			audMan.Play("Mushroom");
-			GameObject.Destroy(col.gameObject);
-			invincible = true;
-			NotManager.current.MakeItBunDem();
-			invincibleTime = Time.time;
-        }
-
-		if(col.gameObject.CompareTag("Enemy"))
-        {
-			if(!invincible)
+		if(!dead)
+		{
+			if(col.gameObject.CompareTag("Mushroom"))
 			{
-				if (!(((this.transform.position.y - col.collider.transform.position.y) > 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) < 1)))
+				audMan.Stop("Main Theme");
+				audMan.Play("Mushroom");
+				GameObject.Destroy(col.gameObject);
+				invincible = true;
+				NotManager.current.MakeItBunDem();
+				invincibleTime = Time.time;
+			}
+
+			if(col.gameObject.CompareTag("Enemy"))
+			{
+				if(!invincible)
 				{
-					audMan.Stop("Main Theme");
-					audMan.Play("Mario Death");
-					gameMan.dead = true;
-					animator.SetBool("Dead", true);
-					Invoke("deadJump", 1.0f);
-				} 
-				else
-				{
-					GetComponent<Rigidbody2D>().AddForce(new Vector2(0,initialJumpForce));
+					if (!(((this.transform.position.y - col.collider.transform.position.y) > 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) < col.gameObject.GetComponent<BoxCollider2D>().size.x)))
+					{
+						audMan.Stop("Main Theme");
+						audMan.Play("Mario Death");
+						gameMan.dead = true;
+						dead = true;
+						animator.SetBool("Dead", true);
+						Invoke("deadJump", 1.0f);
+					} 
+					else
+					{
+						GetComponent<Rigidbody2D>().AddForce(new Vector2(0,initialJumpForce));
+					}
 				}
 			}
-        }
 
-		if(col.gameObject.CompareTag("DeathBarrier"))
-		{
-			audMan.Stop("Main Theme");
-			audMan.Stop("Mushroom");
-			audMan.Play("Mario Death");
-			gameMan.dead = true;
-			animator.SetBool("Dead", true);
-			Invoke("deadJump", 1.0f);
-			print("DEAD");
+			if(col.gameObject.CompareTag("DeathBarrier"))
+			{
+				audMan.Stop("Main Theme");
+				audMan.Stop("Mushroom");
+				audMan.Play("Mario Death");
+				gameMan.dead = true;
+				dead = true;
+				animator.SetBool("Dead", true);
+				Invoke("deadJump", 1.0f);
+				print("DEAD");
+			}
 		}
 	}
 }

@@ -56,7 +56,6 @@ public class EnemyController : MonoBehaviour
 
         if(col.gameObject.name.Equals("Player"))
         {
-            if(GameObject.Find("Player"))
             if(col.gameObject.GetComponent<Mario1Controller2DScript>().invincible)
             {
                 audMan.Play("Enemy Death");
@@ -68,7 +67,7 @@ public class EnemyController : MonoBehaviour
                 dead = true;
                 print("DEAD");
             }
-            else if (((this.transform.position.y - col.collider.transform.position.y) < 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) < 1)) 
+            else if (((this.transform.position.y - col.collider.transform.position.y) < 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) <= gameObject.GetComponent<BoxCollider2D>().size.x)) 
             {
                 audMan.Play("Enemy Death");
                 animator.SetBool("Dead", true);

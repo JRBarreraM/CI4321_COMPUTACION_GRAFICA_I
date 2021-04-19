@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     void StartScene()
     {
         SceneManager.LoadScene("Movement", LoadSceneMode.Single);
+        audMan.Play("Main Theme");
     }
     void Awake()
     {
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
         if(dead)
         {
             Hearts -= 1;
+            dead = false;
             if(Hearts < 0)
             {
                 Invoke("ChangeScene", 4.0f);
@@ -43,7 +45,6 @@ public class GameManager : MonoBehaviour
             else {
                 Invoke("StartScene", 4.0f);
             }
-            dead = false;
         }
     }
 }
