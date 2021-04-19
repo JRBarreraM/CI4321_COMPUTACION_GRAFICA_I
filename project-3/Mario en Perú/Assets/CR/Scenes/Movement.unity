@@ -6553,7 +6553,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Win
     clip: {fileID: 8300000, guid: d7a158c03fb91c4498f63fc320d75148, type: 3}
-    volume: 0.05
+    volume: 0.5
     volumeVariance: 1
     pitch: 1
     pitchVariance: 0
