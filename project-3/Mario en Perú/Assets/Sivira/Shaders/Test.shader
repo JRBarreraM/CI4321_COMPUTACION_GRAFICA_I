@@ -60,8 +60,9 @@ Shader "Sprites/Test"
         void surf (Input IN, inout SurfaceOutput o)
         {
             fixed4 c = SampleSpriteTexture (IN.uv_MainTex) * IN.color;
+            // Se agrega
             o.Albedo = c.rgb * half4(_R, _G, _B, 0.1) * c.a * _A;
-            o.Alpha = c.a * _A;
+            o.Alpha = c.a;
         }
         ENDCG
     }
