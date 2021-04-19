@@ -104,6 +104,11 @@ public class Coloring : MonoBehaviour
         ClearColor();
     }
 
+    private void OnDestroy()
+    {
+        StopCoroutine("UpdateColor");
+    }
+
     public static RGB HSVToRGB(HSV hsv)
     {
         double r = 0, g = 0, b = 0;
