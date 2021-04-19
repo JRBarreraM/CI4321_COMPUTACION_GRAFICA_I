@@ -6,7 +6,7 @@ public class EnemyController : MonoBehaviour
 {
 
     public float moveSpeed = 50f;
-    private float direction = 1;
+    private float direction = -1;
 
     // Start is called before the first frame update
     void Start()
@@ -19,9 +19,16 @@ public class EnemyController : MonoBehaviour
     {
         
     }
-
+    
     void FixedUpdate()
     {
+        if(GetComponent<Rigidbody2D>().velocity.x < 0) {
+			this.transform.localScale = new Vector3(-1,1,1);
+		}
+
+		if(GetComponent<Rigidbody2D>().velocity.x > 0) {
+			this.transform.localScale = new Vector3(1,1,1);
+		}
         GetComponent<Rigidbody2D>().velocity = new Vector2(direction * moveSpeed * Time.deltaTime,GetComponent<Rigidbody2D>().velocity.y);
 
     }
@@ -31,7 +38,14 @@ public class EnemyController : MonoBehaviour
         if(col.gameObject.CompareTag("Wall"))
         {
             direction *= -1;
-            print("VOLTEO");
+        }
+
+        if(col.gameObject.name.Equals("Player"))
+        {
+            if (((this.transform.position.y - col.collider.transform.position.y) < 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) < 1)) 
+            {
+                print("DEAD");
+            }
         }
     }
 }
