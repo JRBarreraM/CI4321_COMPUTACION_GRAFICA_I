@@ -56,6 +56,7 @@ public class Mario1Controller2DScript : MonoBehaviour {
 		{
 			win = true;
 			audMan.Stop("Main Theme");
+			audMan.Stop("Mushroom");
 			audMan.Play("Win");
 			Invoke("transition", 10.0f);
 		}
@@ -166,8 +167,10 @@ public class Mario1Controller2DScript : MonoBehaviour {
 	{
 		invincible = false;
 		audMan.Stop("Mushroom");
-		audMan.Play("Main Theme");
-		NotManager.current.LeaveTheBunDem();
+		if (!win) {
+			audMan.Play("Main Theme");
+			NotManager.current.LeaveTheBunDem();
+		}
 	}
 	void deadJump()
 	{

@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - Enemy
   - Mushroom
+  - DeathBarrier
   layers:
   - Default
   - TransparentFX
