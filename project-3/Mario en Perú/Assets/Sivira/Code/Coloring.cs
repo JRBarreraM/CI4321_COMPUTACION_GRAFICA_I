@@ -89,9 +89,15 @@ public class Coloring : MonoBehaviour
         target = GameObject.Find("Mario").transform;
     }
 
-    void Start()
+    private void Start()
     {
-        StartCoroutine("UpdateColor");
+        NotManager.current.makeItBunDem += MakeItBunDem;
+        NotManager.current.leaveTheBunDem += LeaveTheBunDem;
+
+        rend.material.SetFloat ("_R", (float)1.0);
+        rend.material.SetFloat ("_G", (float)1.0);
+        rend.material.SetFloat ("_B", (float)1.0);
+        rend.material.SetFloat ("_A", (float)10.0);
     }
 
     public static RGB HSVToRGB(HSV hsv)
@@ -163,6 +169,21 @@ public class Coloring : MonoBehaviour
         }
 
         return new RGB((byte)(r * 255), (byte)(g * 255), (byte)(b * 255));
+    }
+
+    private void MakeItBunDem()
+    {
+        rend.material.SetFloat ("_A", (float)0.05);
+        StartCoroutine("UpdateColor");
+    }
+
+    private void LeaveTheBunDem()
+    {
+        rend.material.SetFloat ("_R", (float)1.0);
+        rend.material.SetFloat ("_G", (float)1.0);
+        rend.material.SetFloat ("_B", (float)1.0);
+        rend.material.SetFloat ("_A", (float)10.0);
+        StopCoroutine("UpdateColor");
     }
 
     IEnumerator UpdateColor() 

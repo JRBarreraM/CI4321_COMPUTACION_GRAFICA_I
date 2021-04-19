@@ -42,6 +42,7 @@ Shader "Sprites/Test"
         float _R;
         float _G;
         float _B;
+        float _A;
 
         void vert (inout appdata_full v, out Input o)
         {
@@ -58,7 +59,7 @@ Shader "Sprites/Test"
         void surf (Input IN, inout SurfaceOutput o)
         {
             fixed4 c = SampleSpriteTexture (IN.uv_MainTex) * IN.color;
-            o.Albedo = c.rgb * half4(_R, _G, _B, 0.1) * c.a * 0.05;
+            o.Albedo = c.rgb * half4(_R, _G, _B, 2.0) * c.a * _A;
             o.Alpha = c.a;
         }
         ENDCG
