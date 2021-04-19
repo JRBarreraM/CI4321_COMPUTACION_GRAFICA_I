@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public int Hearts = 3;
+    public int Hearts = 1;
     public AudioManager1 audMan;
     public bool dead = false;
     void RestartScene()
@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
         {
             Hearts -= 1;
             dead = false;
-            if(Hearts < 0)
+            if(Hearts <= 0)
             {
                 Invoke("ChangeScene", 4.0f);
             }
