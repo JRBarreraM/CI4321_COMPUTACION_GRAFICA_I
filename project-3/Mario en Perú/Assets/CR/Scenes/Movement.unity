@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 208388797}
   - component: {fileID: 208388796}
   - component: {fileID: 208388794}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -259,7 +259,7 @@ GameObject:
   - component: {fileID: 598030207}
   - component: {fileID: 598030210}
   - component: {fileID: 598030209}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -389,7 +389,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!50 &854001489
 Rigidbody2D:
   serializedVersion: 4
@@ -604,7 +604,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Mushroom
     clip: {fileID: 8300000, guid: efc98da673c16be49a6c9c5c94c5b995, type: 3}
-    volume: 0.21
+    volume: 0
     volumeVariance: 1
     pitch: 1
     pitchVariance: 0
@@ -625,6 +625,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hearts: 3
   audMan: {fileID: 1119961756}
+  dead: 0
 --- !u!4 &1119961758
 Transform:
   m_ObjectHideFlags: 0
@@ -651,7 +652,7 @@ GameObject:
   - component: {fileID: 1341136597}
   - component: {fileID: 1341136596}
   - component: {fileID: 1341136595}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Square (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -854,7 +855,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1787849053}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: groundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1304,7 +1305,7 @@ GameObject:
   - component: {fileID: 1872414315}
   - component: {fileID: 1872414314}
   - component: {fileID: 1872414320}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1445,7 +1446,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1872414313}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.38, y: 1.81, z: 0}
+  m_LocalPosition: {x: 0.55, y: 3.85, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2101419557}
@@ -1478,6 +1479,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 72
   audMan: {fileID: 1119961756}
+  gameMan: {fileID: 1119961757}
+  invincible: 0
 --- !u!95 &1872414320
 Animator:
   serializedVersion: 3
@@ -1817,7 +1820,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2101419557}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ceilingCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}

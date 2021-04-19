@@ -28,10 +28,26 @@ public class Mario1Controller2DScript : MonoBehaviour {
 	private bool isGrounded;             //Check to see if we are grounded
 	[SerializeField] private LayerMask m_WhatIsGround;							// A mask determining what is ground to the character
 	public AudioManager1 audMan;
+	public GameManager gameMan;
+	public bool invincible = false;
+	private float invincibleTime;
 
 
-
+	void Awake()
+	{
+		audMan = GameObject.Find("GameManager").GetComponent<AudioManager1>();
+		gameMan = GameObject.Find("GameManager").GetComponent<GameManager>();
+	}
 	void Update () {
+
+		if(invincible)
+		{
+			if(Time.time - invincibleTime > 10)
+			{
+				invincible = false;
+			}
+		}
+
 		//Casts a line between our ground checker gameobject and our player
 		//If the floor is between us and the groundchecker, this makes "isGrounded" true
 		
@@ -121,22 +137,28 @@ public class Mario1Controller2DScript : MonoBehaviour {
         {
 			audMan.Play("Mushroom");
 			GameObject.Destroy(col.gameObject);
+			invincible = true;
+			invincibleTime = Time.time;
             print("MUSHROOM");
         }
 
 		if(col.gameObject.CompareTag("Enemy"))
         {
-            if (!(((this.transform.position.y - col.collider.transform.position.y) > 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) < 1)))
-            {
-				audMan.Stop("Main Theme");
-				audMan.Play("Mario Death");
-                print("MARIO DEAD");
-            } 
-			else
+			if(!invincible)
 			{
-				animator.SetBool("Jumping", true);
-				playerJumped = true;   //Our player jumped!
-				playerJumping = true;  //Our player is jumping!
+				if (!(((this.transform.position.y - col.collider.transform.position.y) > 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) < 1)))
+				{
+					audMan.Stop("Main Theme");
+					audMan.Play("Mario Death");
+					gameMan.dead = true;
+					print("MARIO DEAD");
+				} 
+				else
+				{
+					animator.SetBool("Jumping", true);
+					playerJumped = true;   //Our player jumped!
+					playerJumping = true;  //Our player is jumping!
+				}
 			}
         }
 

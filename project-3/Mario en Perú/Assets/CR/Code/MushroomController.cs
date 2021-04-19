@@ -10,13 +10,16 @@ public class MushroomController : MonoBehaviour
     public AudioManager1 audMan;
     private bool outside = false;
     private float posY;
-
+    
+    void Awake()
+	{
+		audMan = GameObject.Find("GameManager").GetComponent<AudioManager1>();
+	}
     // Start is called before the first frame update
     void Start()
     {
         GetComponent<Rigidbody2D>().velocity = new Vector2(0,100*Time.deltaTime);
         posY = gameObject.transform.position.y;
-        print(gameObject.transform.position);
     }
 
     // Update is called once per frame

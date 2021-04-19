@@ -8,6 +8,10 @@ public class MushroomBox : MonoBehaviour
     public GameObject Mushroom;
     private bool opened = false;
     // Start is called before the first frame update
+    void Awake()
+	{
+		audMan = GameObject.Find("GameManager").GetComponent<AudioManager1>();
+	}
     void Start()
     {
         

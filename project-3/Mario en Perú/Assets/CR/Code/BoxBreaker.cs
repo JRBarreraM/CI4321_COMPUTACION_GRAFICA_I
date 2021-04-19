@@ -6,6 +6,10 @@ public class BoxBreaker : MonoBehaviour
 {
     public AudioManager1 audMan;
     // Start is called before the first frame update
+    void Awake()
+	{
+		audMan = GameObject.Find("GameManager").GetComponent<AudioManager1>();
+	}
     void Start()
     {
         

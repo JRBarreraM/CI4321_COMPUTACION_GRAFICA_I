@@ -12,7 +12,6 @@ sysinfo.txt
 *.apk
 *.unitypackage
 [Ll]ogs/
-*.meta
 *.csproj
 
 # ===================================== #
