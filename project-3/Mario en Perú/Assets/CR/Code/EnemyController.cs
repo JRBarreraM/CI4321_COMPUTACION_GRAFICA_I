@@ -44,7 +44,8 @@ public class EnemyController : MonoBehaviour
 
     void DestroyMe()
     {
-        GameObject.Destroy(gameObject);
+        gameObject.SetActive(false);
+        //GameObject.Destroy(gameObject);
     }
     void OnCollisionEnter2D(Collision2D col)
     {
@@ -55,6 +56,7 @@ public class EnemyController : MonoBehaviour
 
         if(col.gameObject.name.Equals("Player"))
         {
+            if(GameObject.Find("Player"))
             if(col.gameObject.GetComponent<Mario1Controller2DScript>().invincible)
             {
                 audMan.Play("Enemy Death");

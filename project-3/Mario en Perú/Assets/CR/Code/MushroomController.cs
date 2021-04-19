@@ -25,7 +25,7 @@ public class MushroomController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(gameObject.transform.position.y >= posY + 1)
+        if(!outside && (gameObject.transform.position.y >= posY + 1))
         {
             GetComponent<Rigidbody2D>().velocity = new Vector2(0,0);
             gameObject.GetComponent<Rigidbody2D>().gravityScale = 1;

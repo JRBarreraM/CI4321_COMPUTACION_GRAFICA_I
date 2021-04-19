@@ -45,9 +45,7 @@ public class Mario1Controller2DScript : MonoBehaviour {
 		{
 			if(Time.time - invincibleTime > 10)
 			{
-				invincible = false;
-				NotManager.current.LeaveTheBunDem();
-				audMan.Stop("Mushroom");
+				InvincibleStop();
 			}
 		}
 
@@ -140,7 +138,13 @@ public class Mario1Controller2DScript : MonoBehaviour {
 			}
 		}
 	}
-
+	void InvincibleStop()
+	{
+		invincible = false;
+		audMan.Stop("Mushroom");
+		audMan.Play("Main Theme");
+		NotManager.current.LeaveTheBunDem();
+	}
 	void deadJump()
 	{
 		GetComponent<Rigidbody2D>().AddForce(new Vector2(0,initialJumpForce*2));
@@ -150,12 +154,12 @@ public class Mario1Controller2DScript : MonoBehaviour {
 
 		if(col.gameObject.CompareTag("Mushroom"))
         {
+			audMan.Stop("Main Theme");
 			audMan.Play("Mushroom");
 			GameObject.Destroy(col.gameObject);
 			invincible = true;
-			invincibleTime = Time.time;
 			NotManager.current.MakeItBunDem();
-            print("MUSHROOM");
+			invincibleTime = Time.time;
         }
 
 		if(col.gameObject.CompareTag("Enemy"))
@@ -179,6 +183,12 @@ public class Mario1Controller2DScript : MonoBehaviour {
 
 		if(col.gameObject.CompareTag("DeathBarrier"))
 		{
+			audMan.Stop("Main Theme");
+			audMan.Stop("Mushroom");
+			audMan.Play("Mario Death");
+			gameMan.dead = true;
+			animator.SetBool("Dead", true);
+			Invoke("deadJump", 1.0f);
 			print("DEAD");
 		}
 	}

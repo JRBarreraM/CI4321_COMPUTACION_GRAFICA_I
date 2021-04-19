@@ -7,6 +7,7 @@ public class MushroomBox : MonoBehaviour
     public AudioManager1 audMan;
     public GameObject Mushroom;
     private bool opened = false;
+    public Sprite empty;
     // Start is called before the first frame update
     void Awake()
 	{
@@ -33,6 +34,7 @@ public class MushroomBox : MonoBehaviour
                 // Cambia Sprite
                 Instantiate(Mushroom, new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.1f), Quaternion.identity);
                 opened = true;
+                GetComponent<SpriteRenderer>().sprite = empty;
             }
         }
     }

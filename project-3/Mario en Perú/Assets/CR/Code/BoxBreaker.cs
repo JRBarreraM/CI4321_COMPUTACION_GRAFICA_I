@@ -5,6 +5,7 @@ using UnityEngine;
 public class BoxBreaker : MonoBehaviour
 {
     public AudioManager1 audMan;
+    public GameObject particles;
     // Start is called before the first frame update
     void Awake()
 	{
@@ -26,8 +27,8 @@ public class BoxBreaker : MonoBehaviour
         if (((this.transform.position.y - col.collider.transform.position.y) > 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) < 1))
         {
                 audMan.Play("Block Destroy");
-                // animation destroy
-                print("BREAK");
+                Instantiate(particles, new Vector3(transform.position.x + 0.3f, transform.position.y, transform.position.z), Quaternion.identity);
+                gameObject.SetActive(false);
         }
     }
 }

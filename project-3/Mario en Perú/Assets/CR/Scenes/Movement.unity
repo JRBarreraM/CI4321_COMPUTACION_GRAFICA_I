@@ -849,7 +849,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: Mushroom
     clip: {fileID: 8300000, guid: efc98da673c16be49a6c9c5c94c5b995, type: 3}
-    volume: 0.3
+    volume: 0.01
     volumeVariance: 1
     pitch: 1
     pitchVariance: 0
