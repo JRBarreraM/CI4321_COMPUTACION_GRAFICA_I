@@ -39,13 +39,6 @@ public class MushroomController : MonoBehaviour
     {
         if(outside)
         {
-            if(GetComponent<Rigidbody2D>().velocity.x < 0) {
-                this.transform.localScale = new Vector3(-0.1f,0.1f,0.1f);
-            }
-
-            if(GetComponent<Rigidbody2D>().velocity.x > 0) {
-                this.transform.localScale = new Vector3(0.1f,0.1f,0.1f);
-            }
             GetComponent<Rigidbody2D>().velocity = new Vector2(direction * moveSpeed * Time.deltaTime,GetComponent<Rigidbody2D>().velocity.y);
         }
     }
