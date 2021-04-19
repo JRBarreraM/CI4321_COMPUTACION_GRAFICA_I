@@ -38,10 +38,10 @@ public class GameManager : MonoBehaviour
             Hearts -= 1;
             if(Hearts < 0)
             {
-                Invoke("ChangeScene", 1.0f);
+                Invoke("ChangeScene", 4.0f);
             }
             else {
-                Invoke("StartScene", 1.0f);
+                Invoke("StartScene", 4.0f);
             }
             dead = false;
         }

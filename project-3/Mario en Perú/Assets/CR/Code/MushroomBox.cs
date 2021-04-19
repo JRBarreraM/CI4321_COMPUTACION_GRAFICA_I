@@ -25,12 +25,15 @@ public class MushroomBox : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if (!opened && (((this.transform.position.y - col.collider.transform.position.y) > 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) < 1)))
+        if(col.gameObject.name.Equals("Player"))
         {
+            if (!opened && (((this.transform.position.y - col.collider.transform.position.y) > 0) && (Mathf.Abs(col.collider.transform.position.x - this.transform.position.x) < 1)))
+            {
                 audMan.Play("Mushroom Box");
                 // Cambia Sprite
-                Instantiate(Mushroom, gameObject.transform.position, Quaternion.identity);
+                Instantiate(Mushroom, new Vector3(transform.position.x, transform.position.y, transform.position.z + 0.1f), Quaternion.identity);
                 opened = true;
+            }
         }
     }
 }

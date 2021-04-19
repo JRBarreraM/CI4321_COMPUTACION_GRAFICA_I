@@ -31,6 +31,7 @@ public class Mario1Controller2DScript : MonoBehaviour {
 	public GameManager gameMan;
 	public bool invincible = false;
 	private float invincibleTime;
+	private bool dead = false;
 
 
 	void Awake()
@@ -45,6 +46,8 @@ public class Mario1Controller2DScript : MonoBehaviour {
 			if(Time.time - invincibleTime > 10)
 			{
 				invincible = false;
+				NotManager.current.LeaveTheBunDem();
+				audMan.Stop("Mushroom");
 			}
 		}
 
@@ -89,48 +92,60 @@ public class Mario1Controller2DScript : MonoBehaviour {
 
 	void FixedUpdate () {
 
-		animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
-
-		if(Input.GetAxis("Horizontal") < 0) {
-			this.transform.localScale = new Vector3(-1,1,1);
+		if(dead)
+		{
+			GetComponent<Rigidbody2D>().velocity = new Vector2(0,GetComponent<Rigidbody2D>().velocity.y);
 		}
+		else
+		{
+			animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
 
-		if(Input.GetAxis("Horizontal") > 0) {
-			this.transform.localScale = new Vector3(1,1,1);
-		}
-
-		//If our player is holding the sprint button, we've held down the button for a while, and we're grounded...
-		//OR our player jumped while we were already sprinting...
-		if (Input.GetButton("Sprint") && Time.time - sprintTimer > sprintDelay && isGrounded || jumpedDuringSprint){
-			//... then sprint
-			GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime * sprintMultiplier,GetComponent<Rigidbody2D>().velocity.y);
-
-			//If our player jumped during our sprint...
-			if (playerJumped){
-				jumpedDuringSprint = true; //... tell the game that we jumped during our sprint!
-				//This is a tricky one. Basically, if we are already sprinting and our player jumps, we want them to hold their
-				//momentum. Since they are no longer grounded, we would not longer return true on a regular sprint because
-				//the build-up of sprint requires the player to be grounded. Likewise, if our player presses another horizontal
-				//key, the jumpedDuringSprint would be set to false in our Update() function, thus causing a "loss" in momentum.
+			if(Input.GetAxis("Horizontal") < 0) {
+				this.transform.localScale = new Vector3(-1,1,1);
 			}
-		}
-		else{
-			//If we're not sprinting, then give us our general momentum
-			GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime,GetComponent<Rigidbody2D>().velocity.y);
-		}
 
-		//If our player pressed the jump key...
-		if (playerJumped){
-			GetComponent<Rigidbody2D>().AddForce(new Vector2(0,initialJumpForce)); //"Jump" our player up in the air!
-			playerJumped = false; //Our player already jumped, so no need to jump again just yet
-		}
+			if(Input.GetAxis("Horizontal") > 0) {
+				this.transform.localScale = new Vector3(1,1,1);
+			}
 
-		//If our player is holding the jump button and a little bit of time has passed...
-		if (playerJumping && Time.time - jumpTimer > delayToExtraJumpForce){
-			GetComponent<Rigidbody2D>().AddForce(new Vector2(0,extraJumpForce)); //... then add some additional force to the jump
+			//If our player is holding the sprint button, we've held down the button for a while, and we're grounded...
+			//OR our player jumped while we were already sprinting...
+			if (Input.GetButton("Sprint") && Time.time - sprintTimer > sprintDelay && isGrounded || jumpedDuringSprint){
+				//... then sprint
+				GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime * sprintMultiplier,GetComponent<Rigidbody2D>().velocity.y);
+
+				//If our player jumped during our sprint...
+				if (playerJumped){
+					jumpedDuringSprint = true; //... tell the game that we jumped during our sprint!
+					//This is a tricky one. Basically, if we are already sprinting and our player jumps, we want them to hold their
+					//momentum. Since they are no longer grounded, we would not longer return true on a regular sprint because
+					//the build-up of sprint requires the player to be grounded. Likewise, if our player presses another horizontal
+					//key, the jumpedDuringSprint would be set to false in our Update() function, thus causing a "loss" in momentum.
+				}
+			}
+			else{
+				//If we're not sprinting, then give us our general momentum
+				GetComponent<Rigidbody2D>().velocity = new Vector2(Input.GetAxis("Horizontal") * moveSpeed * Time.deltaTime,GetComponent<Rigidbody2D>().velocity.y);
+			}
+
+			//If our player pressed the jump key...
+			if (playerJumped){
+				GetComponent<Rigidbody2D>().AddForce(new Vector2(0,initialJumpForce)); //"Jump" our player up in the air!
+				playerJumped = false; //Our player already jumped, so no need to jump again just yet
+			}
+
+			//If our player is holding the jump button and a little bit of time has passed...
+			if (playerJumping && Time.time - jumpTimer > delayToExtraJumpForce){
+				GetComponent<Rigidbody2D>().AddForce(new Vector2(0,extraJumpForce)); //... then add some additional force to the jump
+			}
 		}
 	}
 
+	void deadJump()
+	{
+		GetComponent<Rigidbody2D>().AddForce(new Vector2(0,initialJumpForce*2));
+		GetComponent<BoxCollider2D>().enabled = false;
+	}
 	void OnCollisionEnter2D(Collision2D col) {
 
 		if(col.gameObject.CompareTag("Mushroom"))
@@ -139,6 +154,7 @@ public class Mario1Controller2DScript : MonoBehaviour {
 			GameObject.Destroy(col.gameObject);
 			invincible = true;
 			invincibleTime = Time.time;
+			NotManager.current.MakeItBunDem();
             print("MUSHROOM");
         }
 
@@ -151,13 +167,12 @@ public class Mario1Controller2DScript : MonoBehaviour {
 					audMan.Stop("Main Theme");
 					audMan.Play("Mario Death");
 					gameMan.dead = true;
-					print("MARIO DEAD");
+					animator.SetBool("Dead", true);
+					Invoke("deadJump", 1.0f);
 				} 
 				else
 				{
-					animator.SetBool("Jumping", true);
-					playerJumped = true;   //Our player jumped!
-					playerJumping = true;  //Our player is jumping!
+					GetComponent<Rigidbody2D>().AddForce(new Vector2(0,initialJumpForce));
 				}
 			}
         }
